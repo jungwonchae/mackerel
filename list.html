@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 메뉴</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="menu-body">
+  <!-- 닫기 버튼 -->
+  <button class="menu-close" aria-label="메인으로" onclick="location.href='main.html'">✕</button>
+
+  <div class="menu-wrap">
+    <!-- 로고 -->
+    <img src="./assets/logo_app.svg" alt="고등어 로고" class="menu-logo" />
+
+    <!-- 네비 -->
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="main.html" class="active">메인페이지</a></li>
+
+        <li>
+          <button id="boardToggle" class="nav-accordion" aria-expanded="false">
+            게시판 <span class="chev">▾</span>
+          </button>
+
+          <ul id="boardSub" class="submenu">
+            <li><a href="#">자유게시판</a></li>
+            <li><a href="#">익명게시판</a></li>
+            <li><a href="#">질문게시판</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">랭킹</a></li>
+        <li><a href="#">수행평가</a></li>
+        <li><a href="#">마이페이지</a></li>
+      </ul>
+    </nav>
+
+    <!-- 하단 -->
+    <div class="menu-footer">
+      <a href="#">로그인</a>
+      <span class="sep"> | </span>
+      <a href="#">회원가입</a>
+    </div>
+  </div>
+
+  <script>
+    // 게시판 아코디언
+    const toggle = document.getElementById('boardToggle');
+    const sub = document.getElementById('boardSub');
+
+    toggle.addEventListener('click', () => {
+      const open = sub.classList.toggle('show');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.querySelector('.chev').textContent = open ? '▾' : '▴'; // 펼친 상태는 ▾
+    });
+  </script>
+</body>
+</html>

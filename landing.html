@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>고등어</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="splash">
+  <div class="splash-container">
+    <div class="text-top">
+      <h1>고등어</h1>
+      <p class="subtitle">고등학생들을 위한<br>등수 매기기<br>어플</p>
+    </div>
+  
+    <img src="./assets/logo.png" alt="고등어" class="fish" id="fish">
+    <p class="desc" id="desc">고등어를 눌러보세요!</p>
+  </div>
+
+  <script>
+    const fish = document.getElementById('fish');
+    const desc = document.getElementById('desc');
+
+    const messages = [
+      '고등어는 기억력 향상과 실력별 진단에<br>도움을 줍니다.',
+      '고등어는 맛있어요 🐟',
+      '고등어는 공부의 바다를 헤엄쳐요 🌊',
+      '고등어는 오메가-3 지방산이 풍부해요'
+    ];
+
+    fish.addEventListener('click', () => {
+      const random = Math.floor(Math.random() * messages.length);
+      desc.innerHTML = messages[random];
+    });
+  </script>
+</body>
+</html>
