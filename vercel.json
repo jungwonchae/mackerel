@@ -1,0 +1,41 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/pages/index.html" },
+    { "source": "/index", "destination": "/pages/index.html" },
+    { "source": "/list.html", "destination": "/pages/list.html" },
+
+    { "source": "/landing.html", "destination": "/pages/landing.html" },
+
+    { "source": "/login.html", "destination": "/pages/login.html" },
+    { "source": "/signup.html", "destination": "/pages/signup.html" },
+
+    { "source": "/board/board.html", "destination": "/pages/board/board.html" },
+    { "source": "/board/board_detail.html", "destination": "/pages/board/board_detail.html" },
+    { "source": "/board/write.html", "destination": "/pages/board/write.html" },
+
+    { "source": "/mypage/mypage.html", "destination": "/pages/mypage/mypage.html" },
+    { "source": "/mypage/account.html", "destination": "/pages/mypage/account.html" },
+    { "source": "/mypage/select.html", "destination": "/pages/mypage/select.html" },
+    { "source": "/mypage/subject.html", "destination": "/pages/mypage/subject.html" },
+    { "source": "/mypage/terms.html", "destination": "/pages/mypage/terms.html" },
+
+    { "source": "/ranking/ranking.html", "destination": "/pages/ranking/ranking.html" },
+    { "source": "/ranking/ranking_point.html", "destination": "/pages/ranking/ranking_point.html" },
+
+    { "source": "/certify/count.html", "destination": "/pages/certify/count.html" },
+    { "source": "/certify/certify_task.html", "destination": "/pages/certify/certify_task.html" },
+    { "source": "/certify/certify_arrive.html", "destination": "/pages/certify/certify_arrive.html" },
+    { "source": "/certify/camera.html", "destination": "/pages/certify/camera.html" },
+    { "source": "/certify/result.html", "destination": "/pages/certify/result.html" },
+
+    { "source": "/game/count.html", "destination": "/pages/game/count.html" },
+    { "source": "/game/game_lv1.html", "destination": "/pages/game/game_lv1.html" },
+    { "source": "/game/game_lv2.html", "destination": "/pages/game/game_lv2.html" },
+    { "source": "/game/game_lv3.html", "destination": "/pages/game/game_lv3.html" },
+    { "source": "/game/result.html", "destination": "/pages/game/result.html" },
+
+    { "source": "/class/class.html", "destination": "/pages/class/class.html" },
+    { "source": "/class/class_add.html", "destination": "/pages/class/class_add.html" }
+
+  ]
+}
