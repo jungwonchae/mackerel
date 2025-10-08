@@ -35,7 +35,10 @@
     { "source": "/game/result.html", "destination": "/pages/game/result.html" },
 
     { "source": "/class/class.html", "destination": "/pages/class/class.html" },
-    { "source": "/class/class_add.html", "destination": "/pages/class/class_add.html" }
+    { "source": "/class/option.html", "destination": "/pages/class/option.html" },
+    { "source": "/class/add_personal.html", "destination": "/pages/class/add_personal.html" },
+    { "source": "/class/add_hw.html", "destination": "/pages/class/add_hw.html" },
+    { "source": "/class/add_test.html", "destination": "/pages/class/add_test.html" }
 
   ]
 }
