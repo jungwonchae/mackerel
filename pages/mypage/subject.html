@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 내 과목</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/subject.css">
+</head>
+<body class="main-body">
+  <div class="app container">
+
+    <!-- 헤더 -->
+    <header class="subject-header">
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+      <h1 class="title">내 과목</h1>
+      <img src="../../assets/images/menu.svg" alt="햄버거바" id="menuBtn"
+           style="cursor:pointer;" onclick="location.href='../list.html'"/>
+    </header>
+
+    <main>
+      <!-- 학년 선택 아코디언 -->
+      <section class="box-select">
+        <button class="select-head" id="gradeHead" aria-expanded="false">
+          <span id="gradeLabel">학년 선택</span>
+          <img src="../../assets/images/up.svg" class="chev" alt="토글"/>
+        </button>
+
+        <ul class="select-body" id="gradeBody" role="listbox" aria-labelledby="gradeHead">
+          <li data-grade="1" role="option">1학년</li>
+          <li data-grade="2" role="option">2학년</li>
+          <li data-grade="3" role="option">3학년</li>
+        </ul>
+      </section>
+
+      <!-- 과목 선택 아코디언 -->
+      <section class="box-select">
+        <button class="select-head" id="subjectHead" aria-expanded="false" disabled>
+          <span id="subjectLabel">과목을 선택해주세요</span>
+          <img src="../../assets/images/up.svg" class="chev" alt="토글"/>
+        </button>
+
+        <ul class="select-body" id="subjectBody" role="listbox" aria-labelledby="subjectHead">
+          <!-- JS가 학년별 과목을 주입합니다 -->
+        </ul>
+      </section>
+
+      <!-- 선택된 태그 영역 -->
+      <section id="chips" class="chip-wrap" aria-live="polite"></section>
+
+      <!-- 하단 고정 버튼 -->
+      <div class="footer">
+        <button id="submitBtn" class="primary-btn" type="button">
+        <img src="../../assets/images/send.svg" alt="보내기 아이콘" class="icon-send" />
+        작성 완료
+        </button>
+    </div>
+    </main>
+  </div>
+
+  <script>
+    // 학년별 과목 샘플 (원하면 서버 데이터로 대체 가능)
+    const SUBJECTS = {
+    1: [
+        "공통국어", "공통수학", "공통영어", "통합사회", "통합과학",
+        "정보", "인공지능기초", "한국사", "과학 탐구 실험",
+        "음악", "미술", "체육"
+    ],
+    2: [
+        "문학", "화법과작문", "언어와매체", "수학1", "수학2", "대수", "미적분", "확률과 통계",
+        "영어", "지리", "사회문화", "세계사", "물리", "화학", "생명과학", "지구과학",
+        "로봇과 공학세계", "자료구조", "프로그래밍", "한문", "일본어",
+        "정치", "윤리와 사상", "음악", "미술", "체육"
+    ],
+    3: [
+        "심화국어", "영어2", "심화영어", "수학과제탐구", "영어독해와작문", "한국사",
+        "미적분", "경제수학", "인공지능수학",
+        "경제", "생활과 윤리", "세계지리", "사회문제 탐구", "비교문화",
+        "물리학Ⅱ", "생명과학Ⅱ", "지구과학Ⅱ", "화학Ⅱ",
+        "융합과학", "과학과제 연구", "과학실험", "정보과학",
+        "일본어", "미술", "체육"
+    ]
+    };
+
+    const gradeHead   = document.getElementById('gradeHead');
+    const gradeBody   = document.getElementById('gradeBody');
+    const gradeLabel  = document.getElementById('gradeLabel');
+
+    const subjectHead  = document.getElementById('subjectHead');
+    const subjectBody  = document.getElementById('subjectBody');
+    const subjectLabel = document.getElementById('subjectLabel');
+
+    const chips = document.getElementById('chips');
+    const selected = new Set();   // 선택된 과목 집합
+
+    // 유틸: 아코디언 토글
+    function toggleList(headBtn, bodyEl) {
+      const open = bodyEl.classList.toggle('show');
+      headBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      headBtn.querySelector('.chev').src = open
+        ? "../../assets/images/up.svg"
+        : "../../assets/images/down.svg";
+    }
+
+    gradeHead.addEventListener('click', () => toggleList(gradeHead, gradeBody));
+    subjectHead.addEventListener('click', () => {
+      if (subjectHead.disabled) return;
+      toggleList(subjectHead, subjectBody);
+    });
+
+    // 학년 선택
+    gradeBody.addEventListener('click', (e) => {
+      const li = e.target.closest('li[data-grade]');
+      if (!li) return;
+      const g = li.dataset.grade;
+
+      gradeLabel.textContent = `${g}학년`;
+      gradeBody.classList.remove('show');
+      gradeHead.setAttribute('aria-expanded', 'false');
+
+      // 과목 목록 렌더링
+      subjectBody.innerHTML = SUBJECTS[g]
+        .map(name => `<li data-subject="${name}">${name}</li>`)
+        .join('');
+
+      subjectHead.disabled = false;
+      subjectLabel.textContent = "과목 선택";
+      subjectHead.setAttribute('aria-expanded', 'true');
+      subjectBody.classList.add('show');
+      subjectHead.querySelector('.chev').src = "../../assets/images/up.svg";
+    });
+
+    // 과목 선택
+    subjectBody.addEventListener('click', (e) => {
+      const li = e.target.closest('li[data-subject]');
+      if (!li) return;
+      const name = li.dataset.subject;
+      if (selected.has(name)) return; // 중복 방지
+      selected.add(name);
+      renderChips();
+    });
+
+    // 태그 렌더링
+    function renderChips() {
+      chips.innerHTML = [...selected]
+        .map(n => `
+          <span class="chip" data-chip="${n}">
+            <button class="chip-x" aria-label="${n} 삭제">×</button>
+            ${n}
+          </span>
+        `).join('');
+    }
+
+    // 태그 삭제
+    chips.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip-x');
+      if (!btn) return;
+      const chip = btn.parentElement;
+      const name = chip.dataset.chip;
+      selected.delete(name);
+      chip.remove();
+    });
+
+    // 제출 (데모)
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      // TODO: 서버에 전송하거나 로컬스토리지 저장
+      alert(`선택된 과목: ${[...selected].join(', ') || '없음'}`);
+    });
+  </script>
+</body>
+</html>

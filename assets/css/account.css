@@ -1,0 +1,162 @@
+/* 내 계정 페이지 전용 (공통 토큰은 style.css 사용) */
+
+/* 헤더 정렬 - 좌:뒤로가기, 가운데 로고, 우:메뉴 */
+.app-header{
+    height: var(--header-h);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .back-btn{
+    justify-self: start;
+    background: transparent; 
+    border: 0; 
+    padding: 6px; 
+    cursor: pointer;
+    color: var(--color-text);
+  }
+  .app-header .brand{ justify-self: center; }
+  .app-header .brand img{ height: 28px; }
+  #menuBtn{ justify-self: end; }
+  
+  /* 상단 텍스트/배지 */
+  .account-head{
+    display: grid; place-items: center;
+    margin-top: var(--space-6);
+  }
+  .account-head .school{
+    margin: 0 0 8px; color: #7E7E7E; font-size: 18px;
+  }
+  .tier-badge{
+    display:inline-block;
+    padding: 10px 18px;
+    border-radius: 12px;
+    background: rgba(247, 97, 97, 0.1);
+    color: #F76161;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1;
+  }
+  
+  /* 아바타 */
+  .avatar-wrap{
+    position: relative;
+    display: grid; place-items: center;
+    margin-top: 28px;
+  }
+  .avatar{
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    display:grid; place-items:center; background:#fff;
+  }
+  .avatar img{ width: 68%; height: auto; display:block; }
+  .avatar-edit{
+    position: absolute; right: calc(50% - 130px + 18px); bottom: 18px;
+    /* 위 식은 원형 오른쪽 하단 가장자리 근처에 붙이기 위한 보정 */
+    width: 40px; height: 40px; border-radius: 50%;
+    display:grid; place-items:center;
+    background: #eee; border: 0; cursor: pointer;
+  }
+  
+  /* 필드 카드 */
+  .fields{ margin-top: 32px; display: grid; gap: 16px; }
+  .field{
+    display:flex; align-items:center; justify-content:space-between;
+    background: #f6f6f6; border-radius: 16px; padding: 18px;
+  }
+  .field .value{ font-size: 20px; }
+  .icon-btn.sm{ background: transparent; border:0; padding: 4px; cursor:pointer; }
+  
+  .status.ok{ display:inline-flex; align-items:center; }
+  
+ /* 로그아웃 */
+ .logout{
+    margin: 40px auto 0;
+    display:block;
+    border:0; background:transparent; cursor:pointer;
+    color: #F76161; font-weight:400;
+  }
+  
+  /* 반응형 */
+  @media (max-width: 420px){
+    .avatar{ width: 220px; height: 220px; }
+    .field .value{ font-size: 20px; }
+  }
+  
+  /* 이름 수정 모드 스타일 (리디자인) */
+.field.editing {
+  background: #F8F8F8;                       /* 편집 중에는 화이트 카드 */
+  gap: 12px;                                 /* 내부 간격 */
+}
+
+/* 보기 모드 텍스트는 숨김 */
+.field.editing .value {
+  display: none;
+}
+
+/* 입력창 */
+.field .name-input {
+  display: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 18px;
+  outline: none;
+  background: #fff;
+}
+
+/* 편집 모드에서만 보여주기 + 포커스 링 */
+.field.editing .name-input {
+  display: block;
+}
+.field.editing .name-input:focus {
+  border-color: #0D63ED;
+}
+
+/* 액션 버튼 영역 */
+.field .edit-actions {
+  display: none;
+  gap: 8px;
+  margin-left: auto;                          /* 오른쪽 정렬 */
+  align-items: center;
+}
+.field.editing .edit-actions {
+  display: inline-flex;
+}
+
+/* 편집 아이콘은 편집 모드에서 숨김 */
+.field.editing .icon-btn.sm {
+  display: none;
+}
+
+/* 버튼 공통 */
+.edit-actions button {
+  padding: 10px 14px;
+  border-radius: 999px;                       /* pill 형태 */
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* 취소는 텍스트 버튼 느낌 */
+.edit-actions .cancel-btn {
+  border-color: transparent;
+  background: transparent;
+  color: #6B7280;
+}
+.edit-actions .cancel-btn:hover {
+  background: #F3F4F6;
+}
+
+/* 저장은 브랜드 버튼 */
+.edit-actions .save-btn {
+  background: #0D63ED;
+  color: #fff;
+  border-color: #0D63ED;
+}
+.edit-actions .save-btn:hover {
+  filter: brightness(0.95);
+}
