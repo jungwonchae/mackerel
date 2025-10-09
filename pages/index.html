@@ -1,1 +1,211 @@
 <!-- 메인페이지 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 메인</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+</head>
+
+<body class="main-body">
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="brand">
+        <img src="../assets/images/logo_app.svg" alt="고등어 로고" />
+      </div>
+      <img src="../assets/images/menu.svg" alt="햄버거바" id="menuBtn" style="cursor:pointer;" />
+    </header>
+
+    <!-- 상단 카드 슬라이더 -->
+    <section class="notice card">
+    
+        <div class="panes" id="noticePanes">
+          <!-- 1) 마감 임박 수행평가 -->
+          <div class="pane slide">
+            <div class="pane-title">마감일 임박 수행평가</div>
+            <ul class="pane-list">
+              <li class="pane-item">
+                <div class="left">
+                  <div class="tag">개인일정</div>
+                  <div class="title">전국연합(1,2) 수능모의(3)</div>
+                  <div class="date">2025-09-03</div>
+                </div>
+                <div class="badge red">D-1</div>
+              </li>
+              <li class="pane-item">
+                <div class="left">
+                  <div class="tag">개인일정</div>
+                  <div class="title">전국연합(1,2) 수능모의(3)</div>
+                  <div class="date">2025-09-03</div>
+                </div>
+                <div class="badge red">D-1</div>
+              </li>
+            </ul>
+          </div>
+      
+          <!-- 2) 실시간 랭킹 -->
+          <div class="pane slide">
+            <div class="pane-title">실시간 랭킹</div>
+            <ul class="rank-list compact">
+              <li class="rank-row">
+                <span class="rno r1">1</span>
+                <span class="name">홍길동</span>
+                <span class="score">1000점</span>
+              </li>
+              <li class="rank-row">
+                <span class="rno r2">2</span>
+                <span class="name">김길동</span>
+                <span class="score">1000점</span>
+              </li>
+              <li class="rank-row">
+                <span class="rno r3">3</span>
+                <span class="name">박길동</span>
+                <span class="score">1000점</span>
+              </li>
+            </ul>
+          </div>
+      
+          <!-- 3) 인기글 -->
+          <div class="pane slide">
+            <div class="pane-title">인기글</div>
+            <ul class="hot-list">
+              <li class="hot-row">
+                <span class="board">자유게시판</span>
+                <span class="title">오늘 2학년 야자 있음?</span>
+                <span class="time">1분전</span>
+              </li>
+              <li class="hot-row">
+                <span class="board">자유게시판</span>
+                <span class="title">급식 스프 좀</span>
+                <span class="time">1분전</span>
+              </li>
+              <li class="hot-row">
+                <span class="board">자유게시판</span>
+                <span class="title">체인소맨 본사람</span>
+                <span class="time">1분전</span>
+              </li>
+              <li class="hot-row">
+                <span class="board">자유게시판</span>
+                <span class="title">체인소맨 본사람</span>
+                <span class="time">1분전</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+  
+      <div class="boards-grid">
+        <!-- 자유게시판 -->
+        <section class="board">
+            <div class="section-title">
+            <h3>자유게시판</h3>
+            <a href="#" class="more">더보기 <span class="chev">›</span></a>
+            </div>
+            <ul class="board-list card flat">
+            <li class="board-item">
+                <span class="text">오늘 2학년 야자 있음?</span>
+                <span class="time">1분전</span>
+            </li>
+            <li class="board-item">
+                <span class="text">급식 스프 좀</span>
+                <span class="time">1분전</span>
+            </li>
+            <li class="board-item">
+                <span class="text">체인소맨 본사람</span>
+                <span class="time">1분전</span>
+            </li>
+            </ul>
+        </section>
+    
+        <!-- 익명게시판 -->
+        <section class="board">
+            <div class="section-title">
+            <h3>익명게시판</h3>
+            <a href="#" class="more">더보기 <span class="chev">›</span></a>
+            </div>
+            <ul class="board-list card flat">
+            <li class="board-item">
+                <span class="text">국어쌤 난폭함..</span>
+                <span class="time">1분전</span>
+            </li>
+            <li class="board-item">
+                <span class="text">귀칼 VS 체인소맨</span>
+                <span class="time">1분전</span>
+            </li>
+            <li class="board-item">
+                <span class="text">잼민이 기준이 고딩도 되는거임?</span>
+                <span class="time">1분전</span>
+            </li>
+            </ul>
+        </section>
+    
+        <!-- 질문게시판 -->
+        <section class="board">
+            <div class="section-title">
+            <h3>질문게시판</h3>
+            <a href="#" class="more">더보기 <span class="chev">›</span></a>
+            </div>
+            <ul class="board-list card flat">
+            <li class="board-item">
+                <span class="text">과학 수행평가 이거 어케 함요</span>
+                <span class="time">1분전</span>
+            </li>
+            <li class="board-item">
+                <span class="text">체육복 XL사이즈 많이 큼?</span>
+                <span class="time">1분전</span>
+            </li>
+            <li class="board-item">
+                <span class="text">수학문제풀어줘</span>
+                <span class="time">1분전</span>
+            </li>
+            </ul>
+        </section>
+    </div>
+
+    </div>
+  
+    <script>
+        // 메뉴 버튼 이동
+        document.getElementById('menuBtn').addEventListener('click', () => {
+          window.location.href = 'list.html';
+        });
+      
+        // ===== 공지 패널 슬라이더 =====
+        const panes = document.getElementById('noticePanes');
+        const dots = document.querySelectorAll('.dots .dot');
+        let currentIndex = 0;
+      
+        function updateDots(i){
+          dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+        }
+      
+        function moveTo(i){
+          panes.style.transform = `translateX(${-i * 100}%)`;
+          updateDots(i);
+        }
+      
+        dots.forEach((dot, i) => {
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            moveTo(currentIndex);
+          });
+        });
+      
+        setInterval(() => {
+          currentIndex = (currentIndex + 1) % dots.length;
+          moveTo(currentIndex);
+        }, 7000);
+      
+        moveTo(0);
+      </script>
+      
+  </body>
+  </html>
