@@ -104,3 +104,149 @@ section { margin-top: var(--space-8); }
   border-radius: var(--radius-md);
   padding: var(--space-5);
 }
+
+/* ===== Header ===== */
+.app-header{
+  display:flex; align-items:center; justify-content:space-between;
+  height: var(--header-h); background: var(--color-bg);
+}
+.app-header .brand img{ width:45px; height:auto; }
+.menu-btn{ width:50px; height:50px; cursor:pointer; user-select:none; padding:8px; margin:-8px; }
+
+
+/* ================================
+   Global Menu Overlay (공통)
+   - body.menu-open 일 때만 표시
+================================ */
+
+/* === 오버레이: 반응형 레이아웃로 전환 === */
+.menu-overlay{
+  position: fixed;
+  inset: 0;
+  background: #FFFFFF;
+  z-index: 9999;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .2s ease, visibility .2s ease;
+
+  /* 고정 대신 플렉스 컬럼: 위(로고/메뉴) → 아래(로그인) */
+  display: flex;
+  flex-direction: column;
+
+  /* 안전영역 포함 패딩 */
+  padding:
+    calc(16px + env(safe-area-inset-top))
+    calc(16px + env(safe-area-inset-right))
+    calc(16px + env(safe-area-inset-bottom))
+    calc(16px + env(safe-area-inset-left));
+}
+body.menu-open .menu-overlay{
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+
+/* 닫기 버튼: 안전영역 고려 */
+.menu-close{
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  width: 60px; height: 40px;
+  display: grid; place-items: center;
+  font-size: 28px; line-height: 1;
+  background: transparent; border: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* === 상단 로고 영역: 유동 간격/크기 === */
+.menu-logo{
+  display: flex; justify-content: center; align-items: center;
+  margin: clamp(40px, 12vh, 120px) auto clamp(12px, 10vh, 32px);
+}
+.menu-logo img{
+  width: clamp(36px, 4.2vh, 56px);
+  height: auto;
+}
+
+/* === 네비게이션: 유동 간격 === */
+.menu-nav{
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 6vw, 28px);
+  display: flex; flex-direction: column;
+  gap: clamp(16px, 10vh, 40px);
+  text-align: center;
+}
+
+/* 1차 항목(링크/버튼) — 크기/굵기 유동화 */
+.menu-item{
+  font-size: clamp(18px, 2.8vh, 22px);
+  color: #000; text-decoration: none;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+/* 현재 위치 */
+body[data-active="home"]   .menu-item[data-menu="home"],
+body[data-active="boards"] .menu-item[data-menu="boards"],
+body[data-active="ranking"] .menu-item[data-menu="ranking"],
+body[data-active="tasks"]   .menu-item[data-menu="tasks"],
+body[data-active="mypage"]  .menu-item[data-menu="mypage"]{
+  color: var(--color-primary);
+  font-weight: 600;
+}
+body[data-active="boards"] .menu-accordion-btn[data-menu="boards"]{
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* === 버튼 아코디언(chev 회전 포함) === */
+.menu-accordion-btn{
+  margin: 0 auto;
+  max-width: 520px;
+  padding: 0 clamp(16px, 6vw, 28px);
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  background: transparent; border: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  font-size: clamp(18px, 2.8vh, 22px);
+  font-weight: 400; color: #000; line-height: 1.15;
+}
+.menu-accordion-btn:focus-visible{
+  outline: 3px solid rgba(13,99,237,.25); border-radius: 8px;
+}
+.menu-accordion-btn .chev{
+  width: clamp(14px, 2vh, 18px); height: auto;
+  transform-origin: center; transform: rotate(0deg);
+  transition: transform .2s ease;
+}
+/* JS에서 aria-expanded 토글 시 자동 회전 */
+.menu-accordion-btn[aria-expanded="true"] .chev{ transform: rotate(180deg); }
+
+/* === 서브메뉴 박스: 유동 여백/글자 크기 === */
+.submenu{
+  list-style: none;
+  margin: auto 0;
+  width: min(100%, 520px);
+  background: #F5F5F5;
+  border-radius: 10px;
+  padding: clamp(6px, 1.5vh, 10px) 0;
+}
+.submenu-item{
+  display: block;
+  color: #7E7E7E;
+  font-size: clamp(14px, 1.8vh, 16px);
+  font-weight: 400;
+  padding: clamp(8px, 1.8vh, 12px) clamp(12px, 3vw, 16px);
+  text-decoration: none; border-radius: 10px;
+}
+.submenu-item:hover{ background: #F0F4FF; }
+
+/* === 하단 로그인/회원가입: 고정 해제 + 자연스러운 하단 정렬 === */
+.menu-auth{
+  /* fixed 지우고 자연 배치 */
+  position: static;
+  margin-top: auto;                   /* 플렉스의 맨 아래로 밀기 */
+  text-align: center;
+  font-size: clamp(16px, 2vh, 18px);
+  line-height: 1.2;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.menu-auth a{ color: #111; text-decoration: none; font-weight: 500; }
