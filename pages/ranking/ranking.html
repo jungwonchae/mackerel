@@ -1,23 +1,28 @@
+<!-- pages/ranking/ranking.html : 랭킹 (공통 오버레이 적용) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 랭킹</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
   <link rel="stylesheet" href="../../assets/css/ranking.css" />
 </head>
-<body class="main-body">
+
+<!-- 현재 위치 표시: ranking -->
+<body class="main-body" data-active="ranking">
   <div class="app">
     <!-- 헤더 -->
     <header class="app-header">
-        <div class="brand">
-        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
-        </div>
-        <img src="../../assets/images/menu.svg" 
-            alt="햄버거바" 
-            id="menuBtn" 
-            style="cursor:pointer;" 
-            onclick="location.href='../list.html'" />
+      <div class="brand">
+        <a href="../index.html">
+          <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        </a>
+      </div>
+      <!-- 메뉴 버튼 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
 
     <!-- 상단 탭 -->
@@ -72,7 +77,8 @@
       <div class="list-header">
         <span>등수</span>
         <button class="sort" id="sortBtn" aria-pressed="false">
-          높은순 <img src="../../assets/images/up.svg" alt="위쪽 화살표" class="chev" style="width:10px; height:10px; vertical-align:middle;" />
+          높은순 
+          <img src="../../assets/images/up.svg" alt="위쪽 화살표" class="chev" style="width:10px; height:10px; vertical-align:middle;" />
         </button>
       </div>
 
@@ -120,21 +126,54 @@
       <button class="cta">포인트 받기</button>
     </section>
 
-    <!-- 반 탭 패널 (샘플) -->
+    <!-- 반 탭 패널 -->
     <section id="tab-class" class="tab-panel" role="tabpanel" hidden>
       <div class="empty">반 랭킹은 준비 중이에요.</div>
     </section>
   </div>
 
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false" data-menu="boards">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== JS ===== -->
   <script>
+    // 포인트 받기 버튼
     document.querySelector('.cta').addEventListener('click', () => {
-        window.location.href = 'ranking_point.html';
+      window.location.href = 'ranking_point.html';
     });
-    
+
     // 탭 전환
     const tabs = document.querySelectorAll('.rank-tabs .tab');
     const panels = document.querySelectorAll('.tab-panel');
-    
     tabs.forEach(btn => {
       btn.addEventListener('click', () => {
         tabs.forEach(b => b.classList.remove('on'));
@@ -147,18 +186,21 @@
       });
     });
 
-    // 정렬 버튼 (데모용 토글 UI만)
+    // 정렬 버튼 (UI 토글)
     const sortBtn = document.getElementById('sortBtn');
     sortBtn?.addEventListener('click', () => {
       const pressed = sortBtn.getAttribute('aria-pressed') === 'true';
       sortBtn.setAttribute('aria-pressed', String(!pressed));
-      
+
       // 아이콘 변경
       const chevIcon = sortBtn.querySelector('.chev');
       chevIcon.src = pressed 
         ? "../../assets/images/up.svg" 
-        : "../../assets/images/down.svg"; // 내려가는 아이콘도 준비해두면 좋음
+        : "../../assets/images/down.svg";
     });
   </script>
+
+  <!-- 공통 JS -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>

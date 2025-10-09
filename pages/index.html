@@ -1,212 +1,247 @@
-<!-- 메인페이지 -->
+<!-- pages/index.html : 메인페이지 (공통 오버레이 + 버튼 아코디언 적용) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 메인</title>
-  
+
+  <!-- 공통/페이지 스타일 -->
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/index.css">
 </head>
 
-<body class="main-body">
+<!-- 현재 위치 표시: home -->
+<body class="main-body" data-active="home">
   <div class="app">
-    <!-- 헤더헤더  -->
+    <!-- 헤더 -->
     <header class="app-header">
       <div class="brand">
-        <img src="../assets/images/logo_app.svg" alt="고등어 로고" />
+        <a href="index.html">
+          <img src="../assets/images/logo_app.svg" alt="고등어 로고" />
+        </a>
       </div>
-      <img src="../assets/images/menu.svg" alt="햄버거바" id="menuBtn" style="cursor:pointer;" />
+
+      <!-- 메뉴 버튼: main.js가 e.preventDefault() 후 오버레이 열어줌 -->
+      <a href="list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
 
     <!-- 상단 카드 슬라이더 -->
     <section class="notice card">
-    
-        <div class="panes" id="noticePanes">
-          <!-- 1) 마감 임박 수행평가 -->
-          <div class="pane slide">
-            <div class="pane-title">마감일 임박 수행평가</div>
-            <ul class="pane-list">
-              <li class="pane-item">
-                <div class="left">
-                  <div class="tag">개인일정</div>
-                  <div class="title">전국연합(1,2) 수능모의(3)</div>
-                  <div class="date">2025-09-03</div>
-                </div>
-                <div class="badge red">D-1</div>
-              </li>
-              <li class="pane-item">
-                <div class="left">
-                  <div class="tag">개인일정</div>
-                  <div class="title">전국연합(1,2) 수능모의(3)</div>
-                  <div class="date">2025-09-03</div>
-                </div>
-                <div class="badge red">D-1</div>
-              </li>
-            </ul>
-          </div>
-      
-          <!-- 2) 실시간 랭킹 -->
-          <div class="pane slide">
-            <div class="pane-title">실시간 랭킹</div>
-            <ul class="rank-list compact">
-              <li class="rank-row">
-                <span class="rno r1">1</span>
-                <span class="name">홍길동</span>
-                <span class="score">1000점</span>
-              </li>
-              <li class="rank-row">
-                <span class="rno r2">2</span>
-                <span class="name">김길동</span>
-                <span class="score">1000점</span>
-              </li>
-              <li class="rank-row">
-                <span class="rno r3">3</span>
-                <span class="name">박길동</span>
-                <span class="score">1000점</span>
-              </li>
-            </ul>
-          </div>
-      
-          <!-- 3) 인기글 -->
-          <div class="pane slide">
-            <div class="pane-title">인기글</div>
-            <ul class="hot-list">
-              <li class="hot-row">
-                <span class="board">자유게시판</span>
-                <span class="subject">오늘 2학년 야자 있음?</span>
-                <span class="time">1분전</span>
-              </li>
-              <li class="hot-row">
-                <span class="board">자유게시판</span>
-                <span class="subject">급식 스포 좀</span>
-                <span class="time">1분전</span>
-              </li>
-              <li class="hot-row">
-                <span class="board">자유게시판</span>
-                <span class="subject">체인소맨 본사람</span>
-                <span class="time">1분전</span>
-              </li>
-              <li class="hot-row">
-                <span class="board">자유게시판</span>
-                <span class="subject">체인소맨 본사람</span>
-                <span class="time">1분전</span>
-              </li>
-            </ul>
-          </div>
+      <div class="panes" id="noticePanes">
+        <!-- 1) 마감 임박 수행평가 -->
+        <div class="pane slide">
+          <div class="pane-title">마감일 임박 수행평가</div>
+          <ul class="pane-list">
+            <li class="pane-item">
+              <div class="left">
+                <div class="tag">개인일정</div>
+                <div class="title">전국연합(1,2) 수능모의(3)</div>
+                <div class="date">2025-09-03</div>
+              </div>
+              <div class="badge red">D-1</div>
+            </li>
+            <li class="pane-item">
+              <div class="left">
+                <div class="tag">개인일정</div>
+                <div class="title">전국연합(1,2) 수능모의(3)</div>
+                <div class="date">2025-09-03</div>
+              </div>
+              <div class="badge red">D-1</div>
+            </li>
+          </ul>
         </div>
-      </section>
-      <div class="dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+
+        <!-- 2) 실시간 랭킹 -->
+        <div class="pane slide">
+          <div class="pane-title">실시간 랭킹</div>
+          <ul class="rank-list compact">
+            <li class="rank-row">
+              <span class="rno r1">1</span>
+              <span class="name">홍길동</span>
+              <span class="score">1000점</span>
+            </li>
+            <li class="rank-row">
+              <span class="rno r2">2</span>
+              <span class="name">김길동</span>
+              <span class="score">1000점</span>
+            </li>
+            <li class="rank-row">
+              <span class="rno r3">3</span>
+              <span class="name">박길동</span>
+              <span class="score">1000점</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 3) 인기글 -->
+        <div class="pane slide">
+          <div class="pane-title">인기글</div>
+          <ul class="hot-list">
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="subject">오늘 2학년 야자 있음?</span>
+              <span class="time">1분전</span>
+            </li>
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="subject">급식 스포 좀</span>
+              <span class="time">1분전</span>
+            </li>
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="subject">체인소맨 본사람</span>
+              <span class="time">1분전</span>
+            </li>
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="subject">체인소맨 본사람</span>
+              <span class="time">1분전</span>
+            </li>
+          </ul>
+        </div>
       </div>
-  
-      <div class="boards-grid">
-        <!-- 자유게시판 -->
-        <section class="board">
-            <div class="section-title">
-            <h3>자유게시판</h3>
-            <a href="#" class="more">더보기 <span class="chev">›</span></a>
-            </div>
-            <ul class="board-list card flat">
-            <li class="board-item">
-                <span class="text">오늘 2학년 야자 있음?</span>
-                <span class="time">1분전</span>
-            </li>
-            <li class="board-item">
-                <span class="text">급식 스프 좀</span>
-                <span class="time">1분전</span>
-            </li>
-            <li class="board-item">
-                <span class="text">체인소맨 본사람</span>
-                <span class="time">1분전</span>
-            </li>
-            </ul>
-        </section>
-    
-        <!-- 익명게시판 -->
-        <section class="board">
-            <div class="section-title">
-            <h3>익명게시판</h3>
-            <a href="#" class="more">더보기 <span class="chev">›</span></a>
-            </div>
-            <ul class="board-list card flat">
-            <li class="board-item">
-                <span class="text">국어쌤 난폭함..</span>
-                <span class="time">1분전</span>
-            </li>
-            <li class="board-item">
-                <span class="text">귀칼 VS 체인소맨</span>
-                <span class="time">1분전</span>
-            </li>
-            <li class="board-item">
-                <span class="text">잼민이 기준이 고딩도 되는거임?</span>
-                <span class="time">1분전</span>
-            </li>
-            </ul>
-        </section>
-    
-        <!-- 질문게시판 -->
-        <section class="board">
-            <div class="section-title">
-            <h3>질문게시판</h3>
-            <a href="#" class="more">더보기 <span class="chev">›</span></a>
-            </div>
-            <ul class="board-list card flat">
-            <li class="board-item">
-                <span class="text">과학 수행평가 이거 어케 함요</span>
-                <span class="time">1분전</span>
-            </li>
-            <li class="board-item">
-                <span class="text">체육복 XL사이즈 많이 큼?</span>
-                <span class="time">1분전</span>
-            </li>
-            <li class="board-item">
-                <span class="text">수학문제풀어줘</span>
-                <span class="time">1분전</span>
-            </li>
-            </ul>
-        </section>
+    </section>
+
+    <!-- 인디케이터 -->
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
 
+    <!-- 하단 게시판 섹션 -->
+    <div class="boards-grid">
+      <!-- 자유게시판 -->
+      <section class="board">
+        <div class="section-title">
+          <h3>자유게시판</h3>
+          <a href="#" class="more">더보기 <span class="chev">›</span></a>
+        </div>
+        <ul class="board-list card flat">
+          <li class="board-item">
+            <span class="text">오늘 2학년 야자 있음?</span>
+            <span class="time">1분전</span>
+          </li>
+          <li class="board-item">
+            <span class="text">급식 스프 좀</span>
+            <span class="time">1분전</span>
+          </li>
+          <li class="board-item">
+            <span class="text">체인소맨 본사람</span>
+            <span class="time">1분전</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 익명게시판 -->
+      <section class="board">
+        <div class="section-title">
+          <h3>익명게시판</h3>
+          <a href="#" class="more">더보기 <span class="chev">›</span></a>
+        </div>
+        <ul class="board-list card flat">
+          <li class="board-item">
+            <span class="text">국어쌤 난폭함..</span>
+            <span class="time">1분전</span>
+          </li>
+          <li class="board-item">
+            <span class="text">귀칼 VS 체인소맨</span>
+            <span class="time">1분전</span>
+          </li>
+          <li class="board-item">
+            <span class="text">잼민이 기준이 고딩도 되는거임?</span>
+            <span class="time">1분전</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 질문게시판 -->
+      <section class="board">
+        <div class="section-title">
+          <h3>질문게시판</h3>
+          <a href="#" class="more">더보기 <span class="chev">›</span></a>
+        </div>
+        <ul class="board-list card flat">
+          <li class="board-item">
+            <span class="text">과학 수행평가 이거 어케 함요</span>
+            <span class="time">1분전</span>
+          </li>
+          <li class="board-item">
+            <span class="text">체육복 XL사이즈 많이 큼?</span>
+            <span class="time">1분전</span>
+          </li>
+          <li class="board-item">
+            <span class="text">수학문제풀어줘</span>
+            <span class="time">1분전</span>
+          </li>
+        </ul>
+      </section>
     </div>
-  
-    <script>
-        // 메뉴 버튼 이동
-        document.getElementById('menuBtn').addEventListener('click', () => {
-          window.location.href = 'list.html';
-        });
-      
-        // ===== 공지 패널 슬라이더 =====
-        const panes = document.getElementById('noticePanes');
-        const dots = document.querySelectorAll('.dots .dot');
-        let currentIndex = 0;
-      
-        function updateDots(i){
-          dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
-        }
-      
-        function moveTo(i){
-          panes.style.transform = `translateX(${-i * 100}%)`;
-          updateDots(i);
-        }
-      
-        dots.forEach((dot, i) => {
-          dot.addEventListener('click', () => {
-            currentIndex = i;
-            moveTo(currentIndex);
-          });
-        });
-      
-        setInterval(() => {
-          currentIndex = (currentIndex + 1) % dots.length;
-          moveTo(currentIndex);
-        }, 7000);
-      
-        moveTo(0);
-      </script>
-      
-  </body>
-  </html>
+  </div>
+
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="login.html">로그인</a> | <a href="signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== 페이지 전용 스크립트(슬라이더) + 공통 스크립트 ===== -->
+  <script>
+    // 슬라이더
+    const panes = document.getElementById('noticePanes');
+    const dots = document.querySelectorAll('.dots .dot');
+    let currentIndex = 0;
+
+    function updateDots(i){
+      dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+    }
+    function moveTo(i){
+      panes.style.transform = `translateX(${-i * 100}%)`;
+      updateDots(i);
+    }
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        moveTo(currentIndex);
+      });
+    });
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % dots.length;
+      moveTo(currentIndex);
+    }, 7000);
+    moveTo(0);
+  </script>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../assets/js/main.js"></script>
+</body>
+</html>

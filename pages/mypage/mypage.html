@@ -1,3 +1,4 @@
+<!-- pages/mypage/mypage.html : 마이페이지 (공통 오버레이 + 버튼 아코디언 적용) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,31 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 마이페이지</title>
 
-  <!-- 공통 -->
+  <!-- 공통 / 페이지 전용 스타일 -->
   <link rel="stylesheet" href="../../assets/css/style.css">
-  <!-- 마이페이지 전용 -->
   <link rel="stylesheet" href="../../assets/css/mypage.css">
 </head>
 
-<body class="main-body">
+<!-- 현재 위치 표시: mypage -->
+<body class="main-body" data-active="mypage">
   <div class="app container">
 
     <!-- 헤더 -->
     <header class="app-header">
       <div class="brand">
-        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        <a href="../index.html">
+          <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        </a>
       </div>
-      <img 
-        src="../../assets/images/menu.svg" 
-        alt="햄버거바" 
-        id="menuBtn" 
-        style="cursor:pointer;" 
-        onclick="location.href='../list.html'"
-      />
+      <!-- 메뉴 버튼: main.js가 preventDefault 후 오버레이를 엽니다 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
 
-    <!-- 상단 프로필 -->
+    <!-- 본문 -->
     <main>
+      <!-- 상단 프로필 카드 -->
       <section class="profile card">
         <div class="tier-badge">그랜드 마스터</div>
 
@@ -40,12 +41,12 @@
         <h1 class="name">홍길동</h1>
         <p class="school">포항고</p>
 
-        <!-- 포인트 -->
+        <!-- 포인트 패널 -->
         <div class="panel points">
           <div class="panel-title">보유 포인트</div>
           <div class="point-box">
             <span class="point-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" fill="rgb(13, 99, 237)" fill-opacity="0.1"/>
                 <text x="12" y="18" text-anchor="middle" font-size="16" fill="#0D63ED" font-weight="400">P</text>
               </svg>
@@ -55,30 +56,65 @@
         </div>
       </section>
 
-            <!-- 설정 리스트 -->
-            <section class="settings">
-                <h2 class="section-title">설정</h2>
-        
-                <nav class="list">
-                  <a class="item" href="account.html">
-                    <span>내 계정</span>
-                    <span class="chev" aria-hidden="true">&rsaquo;</span>
-                  </a>
-        
-                  <a class="item" href="subject.html">
-                    <span>내 과목</span>
-                    <span class="chev" aria-hidden="true">&rsaquo;</span>
-                  </a>
-        
-                  <a class="item" href="terms.html">
-                    <span>서비스 이용 약관</span>
-                    <span class="chev" aria-hidden="true">&rsaquo;</span>
-                  </a>
-                </nav>
-        
-                <button class="logout" type="button">로그아웃</button>
-            </section>
+      <!-- 설정 리스트 -->
+      <section class="settings">
+        <h2 class="section-title">설정</h2>
+
+        <nav class="list">
+          <a class="item" href="account.html">
+            <span>내 계정</span>
+            <span class="chev" aria-hidden="true">&rsaquo;</span>
+          </a>
+
+          <a class="item" href="subject.html">
+            <span>내 과목</span>
+            <span class="chev" aria-hidden="true">&rsaquo;</span>
+          </a>
+
+          <a class="item" href="terms.html">
+            <span>서비스 이용 약관</span>
+            <span class="chev" aria-hidden="true">&rsaquo;</span>
+          </a>
+        </nav>
+
+        <button class="logout" type="button">로그아웃</button>
+      </section>
     </main>
   </div>
+
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false" data-menu="boards">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>
