@@ -1,0 +1,111 @@
+/* ===== Header ===== */
+.app-header{
+  display:flex; align-items:center; justify-content:space-between;
+  height: var(--header-h); background: var(--color-bg);
+}
+.app-header .brand img{ width:38px; height:auto; }
+.menu-btn{ width:50px; height:50px; cursor:pointer; user-select:none; padding:8px; margin:-8px; }
+
+/* ===== Section title ===== */
+.section-title{ display:flex; align-items:center; justify-content:space-between; margin:4px 6px 10px; }
+.section-title h2,.section-title h3{ margin:0; font-weight:600; }
+.section-title h2{ font-size:1.35rem; }
+.section-title h3{ font-size:1.25rem; }
+.more{ font-size:.98rem; color:var(--text-dim-2); text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:400; }
+.more .chev{ font-size:1.1rem; }
+
+.time{ color:var(--text-dim-1); font-size:.85rem; font-weight:400; white-space:nowrap; }
+
+/* ===== 상단 3패널 슬라이더 (한 화면 1장) ===== */
+.notice.card{
+  background: var(--surface-alt);
+  border-radius:10px;
+  padding:14px 12px;
+  overflow:hidden;
+}
+.mobile-only{ display:block; }
+
+.panes{ display:flex; width:100%; transition: transform .5s ease; will-change: transform; }
+
+.pane{ flex:0 0 100%; min-width:100%; }
+.pane-title{ color:var(--primary-600); font-weight:500; font-size:15px; margin:0 0 10px 8px; }
+.pane-list{ padding:0 6px; }
+
+/* 내부 흰색 카드 */
+.pane-item{
+  display:flex; align-items:center; justify-content:space-between;
+  background:#fff; border-radius:10px;
+  padding:14px 16px; margin:10px 6px;
+  box-shadow: var(--shadow-1);
+}
+.pane-item:last-child{ margin-bottom:0; }
+.pane-item .left{ display:flex; flex-direction:column; }
+.pane-item .tag{ color:var(--primary-600); font-weight:600; font-size:13px; margin-bottom:4px; }
+.pane-item .title{ color:var(--text-strong); font-weight:700; font-size:16px; }
+.pane-item .date{ color:var(--text-dim-2); font-size:13px; margin-top:4px; }
+
+.badge{ background:transparent; color:var(--danger); padding:0; font-weight:400; font-size:15px; }
+
+/* ===== (2) 실시간 랭킹 ===== */
+.rank-list{ list-style:none; padding:0; margin:0; }
+.rank-list.compact{
+  background:#fff; border-radius:10px; padding:10px; margin:0 6px;
+  box-shadow: var(--shadow-1);
+}
+.rank-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 8px; border-bottom:1px solid var(--color-border);
+}
+.rank-row:last-child{ border-bottom:0; }
+.rno{
+  width:28px; height:28px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:700;
+}
+.r1{ background: var(--medal-1); }
+.r2{ background: var(--medal-2); }
+.r3{ background: var(--medal-3); }
+.rank-row .name{ flex:1; margin-left:10px; color:var(--text-dim-1); }
+.rank-row .score{ color:var(--text-dim-2); }
+
+/* ===== (3) 실시간 인기글 ===== */
+.hot-list{
+  list-style:none; padding:12px 14px; margin:0 6px;
+  background:#fff; border-radius:10px; box-shadow: var(--shadow-2);
+}
+.hot-row{ display:grid; grid-template-columns:auto 1fr auto; gap:10px; padding:8px 0; }
+.hot-row .board{ font-weight:400; color:var(--text-strong); }
+.hot-row .title{ font-weight:400; color:var(--text-dim-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hot-row .time{ font-weight:400; color:var(--text-dim-2); font-size:10px; white-space:nowrap; }
+
+/* Dots */
+.dots{ display:flex; gap:8px; justify-content:center; margin-top:10px; }
+.dot{ width:8px; height:8px; border-radius:50%; background:var(--dot-inactive); }
+.dot.active{ background:var(--primary-600); }
+
+/* ===== 하단 게시판 ===== */
+.board{ margin-top:26px; }
+.board-list{ list-style:none; padding:10px; margin:10px 0 0; background:var(--surface-alt); border-radius:10px; }
+.board-item{ display:flex; align-items:center; justify-content:space-between; margin:0 6px; }
+.board-item .text{ font-size:1rem; color:var(--text-dim-1); }
+
+/* 반응형 */
+/* ===== Boards Grid (하단 게시판 그리드) ===== */
+.boards-grid{
+  display: grid;
+  gap: 28px;                 /* 카드 간격 */
+  margin-top: 26px;          /* 위와 간격 */
+}
+
+/* 넓은 화면에서 2열 그리드로 변경 */
+@media (min-width: 960px){
+  .boards-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;      /* 행 높이 차이 날 때 위로 정렬 */
+  }
+
+  /* 그리드 안 카드들 시각적 여백 보강 (선택) */
+  .boards-grid .board-list{
+    padding: 14px;
+  }
+}
