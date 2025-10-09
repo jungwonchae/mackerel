@@ -1,0 +1,47 @@
+/* 이용약관 페이지 전용 */
+
+/* 헤더 */
+.app-header {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+  .back-btn img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* 제목 */
+  .page-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 12px 0 20px 0;
+  }
+  
+  /* 이용약관 박스 */
+  .terms-box {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 20px;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-size: 15px;
+    white-space: pre-line;
+  }
+  
+  /* 반응형 조정 */
+  @media (max-width: 420px) {
+    .page-title {
+      font-size: 18px;
+    }
+    .terms-box {
+      padding: 16px;
+    }
+  }

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 업적/아이콘 선택</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/select.css">
+</head>
+<body class="main-body">
+  <div class="app container">
+
+    <!-- 헤더 -->
+    <header class="app-header">
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+      <img src="../../assets/images/menu.svg" alt="햄버거바" id="menuBtn"
+           style="cursor:pointer;" onclick="location.href='../list.html'"/>
+    </header>
+
+    <main>
+
+      <!-- 획득 업적 -->
+      <section class="sec">
+        <h2 class="sec-title">획득 업적</h2>
+        <div class="panel achievements" id="achievements">
+          <!-- 원하는 업적들을 버튼으로 나열 -->
+          <button class="tag t-red"   data-value="그랜드 마스터">그랜드 마스터</button>
+          <button class="tag t-pink"  data-value="마스터">마스터</button>
+          <button class="tag t-blue"  data-value="다이아">다이아</button>
+
+          <button class="tag t-teal"  data-value="플래티넘">플래티넘</button>
+          <button class="tag t-gold"  data-value="골드">골드</button>
+          <button class="tag t-silver" data-value="실버">실버</button>
+          <button class="tag t-bronze" data-value="브론즈">브론즈</button>
+
+          <button class="tag t-gray"  data-value="일반 고등어">일반 고등어</button>
+          <button class="tag t-gray"  data-value="일반 삼치">일반 삼치</button>
+        </div>
+      </section>
+
+      <!-- 획득 아이콘 -->
+      <section class="sec">
+        <h2 class="sec-title">획득 아이콘</h2>
+        <div class="panel icons" id="icons">
+          <!-- 카드 1 -->
+          <button class="icon-card" data-src="../../assets/images/fish.svg" data-label="일반 고등어">
+            <span class="thumb"><img src="../../assets/images/fish.svg" alt="일반 고등어"/></span>
+            <span class="label">일반<br/>고등어</span>
+          </button>
+
+          <!-- 카드 2 -->
+          <button class="icon-card" data-src="../../assets/images/fish_crown.svg" data-label="왕관 고등어">
+            <span class="thumb"><img src="../../assets/images/fish_crown.svg" alt="왕관 고등어"/></span>
+            <span class="label">왕관<br/>고등어</span>
+          </button>
+
+          <!-- 필요시 더 추가 -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 하단 고정 버튼 -->
+    <div class="footer">
+      <button id="applyBtn" class="primary-btn" type="button">
+        <img src="../../assets/images/send.svg" class="icon-send" alt="" />
+        적용 완료
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 키 이름(다른 페이지와 공유)
+    const LS_ACHV = 'selectedAchievement';
+    const LS_ICON_SRC = 'selectedProfileIconSrc';
+    const LS_ICON_LABEL = 'selectedProfileIconLabel';
+
+    // 현재 저장된 값으로 초기 하이라이트
+    const savedAchv = localStorage.getItem(LS_ACHV);
+    const savedIcon = localStorage.getItem(LS_ICON_SRC);
+
+    // 업적 선택
+    const achvWrap = document.getElementById('achievements');
+    let currentAchv = savedAchv || null;
+
+    achvWrap.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tag');
+      if (!btn) return;
+
+      // 활성 클래스 처리
+      achvWrap.querySelectorAll('.tag.active').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+
+      currentAchv = btn.dataset.value;
+    });
+
+    // 아이콘 선택
+    const iconsWrap = document.getElementById('icons');
+    let currentIconSrc = savedIcon || null;
+    let currentIconLabel = localStorage.getItem(LS_ICON_LABEL) || '';
+
+    iconsWrap.addEventListener('click', (e) => {
+      const card = e.target.closest('.icon-card');
+      if (!card) return;
+
+      iconsWrap.querySelectorAll('.icon-card.active').forEach(el => el.classList.remove('active'));
+      card.classList.add('active');
+
+      currentIconSrc = card.dataset.src;
+      currentIconLabel = card.dataset.label || '';
+    });
+
+    // 초기 표시(저장값 하이라이트)
+    if (savedAchv) {
+      const btn = achvWrap.querySelector(`.tag[data-value="${savedAchv}"]`);
+      if (btn) btn.classList.add('active');
+    }
+    if (savedIcon) {
+      const card = iconsWrap.querySelector(`.icon-card[data-src="${savedIcon}"]`);
+      if (card) card.classList.add('active');
+    }
+
+    // 적용 버튼
+    document.getElementById('applyBtn').addEventListener('click', () => {
+      if (currentAchv) localStorage.setItem(LS_ACHV, currentAchv);
+      if (currentIconSrc) {
+        localStorage.setItem(LS_ICON_SRC, currentIconSrc);
+        localStorage.setItem(LS_ICON_LABEL, currentIconLabel);
+      }
+      // 적용 후 이전 페이지로
+      history.back();
+    });
+  </script>
+</body>
+</html>

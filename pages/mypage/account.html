@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 내 계정</title>
+
+  <!-- 공통 -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <!-- 페이지 전용 -->
+  <link rel="stylesheet" href="../../assets/css/account.css">
+</head>
+
+<body class="main-body">
+  <div class="app container">
+    <!-- 헤더 -->
+    <header class="app-header">
+        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기" />
+        </button>
+        <img 
+        src="../../assets/images/menu.svg" 
+        alt="햄버거바" 
+        id="menuBtn" 
+        style="cursor:pointer;" 
+        onclick="location.href='../list.html'"
+        />
+  </header>
+
+    <main>
+      <!-- 상단 학교/등급 -->
+      <section class="account-head">
+        <p class="school">포항고</p>
+        <div class="tier-badge" style="cursor:pointer;" onclick="location.href='select.html'">그랜드 마스터</div>
+      </section>
+
+      <!-- 아바타 -->
+      <section class="avatar-wrap">
+        <div class="avatar">
+          <img src="../../assets/images/fish.svg" alt="프로필 이미지"/>
+        </div>
+        <button class="avatar-edit" aria-label="프로필 사진 변경" onclick="location.href='select.html'">
+          <!-- pencil -->
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                  fill="#777"/>
+          </svg>
+        </button>
+      </section>
+
+      <!-- 필드 카드 -->
+      <section class="fields">
+        <!-- 이름 -->
+        <div class="field" id="nameField">
+          <span class="value" id="nameValue">홍길동</span>
+          <input type="text" class="name-input" id="nameInput" value="홍길동" />
+          <div class="edit-actions">
+            <button type="button" class="cancel-btn" id="cancelBtn">취소</button>
+            <button type="button" class="save-btn" id="saveBtn">저장</button>
+          </div>
+          <button class="icon-btn sm" id="editBtn" aria-label="이름 수정">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                    fill="#777"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="field">
+          <span class="value">abc1234@gmail.com</span>
+          <span class="status ok" title="인증됨" aria-label="인증됨">
+            <!-- check -->
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="#4CCB8A"/>
+              <path d="M7 12l3 3 7-7" fill="none" stroke="#fff" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+      </section>
+
+      <button class="logout" type="button">로그아웃</button>
+    </main>
+
+  </div>
+
+  <script>
+    const nameField = document.getElementById('nameField');
+    const nameValue = document.getElementById('nameValue');
+    const nameInput = document.getElementById('nameInput');
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    // 수정 버튼 클릭
+    editBtn.addEventListener('click', () => {
+      nameField.classList.add('editing');
+      nameInput.value = nameValue.textContent;
+      nameInput.focus();
+    });
+
+    // 저장 버튼 클릭
+    saveBtn.addEventListener('click', () => {
+      const newName = nameInput.value.trim();
+      if (newName) {
+        nameValue.textContent = newName;
+        nameField.classList.remove('editing');
+      }
+    });
+
+    // 취소 버튼 클릭
+    cancelBtn.addEventListener('click', () => {
+      nameField.classList.remove('editing');
+      nameInput.value = nameValue.textContent;
+    });
+
+    // Enter 키로 저장
+    nameInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        saveBtn.click();
+      }
+    });
+
+    // ESC 키로 취소
+    nameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        cancelBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
