@@ -101,7 +101,8 @@
     margin: 40px auto 0;
     display:block;
     border:0; background:transparent; cursor:pointer;
-    color: #F76161; font-weight:400;
+    color: #F76161; font-weight:400; font-size: 15px;
+
   }
   
   /* 작은 화면 보정 */
