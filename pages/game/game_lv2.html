@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>고등어 – 다른 글자 찾기 (Lv.2)</title>
+<link rel="stylesheet" href="../../assets/css/game_lv2.css" />
+</head>
+<body class="main-body">
+  <div class="app">ㅌ
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="brand"><img src="../../assets/images/logo_app.svg" alt="고등어 로고" /></div>
+      <img src="../../assets/images/menu.svg" alt="햄버거바" class="menu" onclick="location.href='../list.html'"/>
+    </header>
+
+    <!-- 진행바 -->
+    <div class="progress-wrap" aria-label="남은 시간">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- 타이틀 -->
+    <h1 class="title">다른 글자 찾기 (LV2)</h1>
+
+    <!-- 카드 4x4 -->
+    <div class="grid" id="grid"></div>
+
+    <!-- 버튼 영역 -->
+    <div class="btn-area">
+      <button id="primaryBtn" class="btn-primary">그만하기</button>
+      <button id="secondaryBtn" class="btn-secondary" style="display:none">그만하기</button>
+    </div>
+  </div>
+
+<script>
+/** ====== 설정 ====== */
+const DURATION_MS = 12000; // LV2: 더 짧은 제한시간 (12초)
+const ROWS = 4, COLS = 4;
+
+/** ====== 상태 ====== */
+let timerId = null;
+let endAt = null;
+let finished = false; // 정답/오답/시간초과 후 true
+let correctIndex = -1;
+
+/** ====== DOM ====== */
+const gridEl = document.getElementById('grid');
+const progressFill = document.getElementById('progressFill');
+const primaryBtn = document.getElementById('primaryBtn');
+const secondaryBtn = document.getElementById('secondaryBtn');
+
+/** ====== 카드 구성 (예시: 같은 텍스트, 1개만 살짝 다른 텍스트) ====== */
+const normalText = '바른\n말고\n운말';
+const oddText    = '바른\n말교\n온말'; // 한 글자 다른 예시 (취향대로 교체 가능)
+
+function buildGrid() {
+  gridEl.innerHTML = '';
+  const total = ROWS * COLS;
+  correctIndex = Math.floor(Math.random() * total);
+
+  for (let i=0; i<total; i++) {
+    const btn = document.createElement('div');
+    btn.className = 'card';
+    btn.innerText = (i === correctIndex) ? oddText : normalText;
+    btn.addEventListener('click', () => onPick(i, btn));
+    gridEl.appendChild(btn);
+  }
+}
+
+function lockGrid() {
+  gridEl.querySelectorAll('.card').forEach(c => {
+    c.style.pointerEvents = 'none';
+  });
+}
+
+/** ====== 선택 로직 ====== */
+function onPick(index, el) {
+  if (finished) return;
+  // 선택 표시
+  gridEl.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  if (index === correctIndex) {
+    // 정답
+    el.classList.add('correct');
+    finished = true;
+    lockGrid();
+    stopTimer();
+    // 버튼 상태: 상단은 "다음단계", 하단에 "그만하기"
+    primaryBtn.textContent = '다음단계';
+    primaryBtn.onclick = () => location.href = 'game_lv3.html'; // 다음 단계가 있다면 수정
+    secondaryBtn.style.display = 'block';
+    secondaryBtn.onclick = () => history.back();
+  } else {
+    // 오답
+    el.classList.add('wrong');
+    finished = true;
+    lockGrid();
+    stopTimer();
+    revealCorrectHint();
+    // 버튼 상태: "포인트 받기"
+    primaryBtn.textContent = '포인트 받기';
+    primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
+    secondaryBtn.style.display = 'none';
+  }
+}
+
+function revealCorrectHint() {
+  const cards = Array.from(gridEl.querySelectorAll('.card'));
+  const c = cards[correctIndex];
+  if (c) c.classList.add('hint');
+}
+
+/** ====== 진행바 타이머 ====== */
+function startTimer() {
+  endAt = Date.now() + DURATION_MS;
+  tick();
+  timerId = setInterval(tick, 100);
+}
+function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+function tick() {
+  const remain = Math.max(0, endAt - Date.now());
+  const ratio = remain / DURATION_MS; // 1 -> 0
+  progressFill.style.width = (ratio * 100) + '%';
+
+  if (remain <= 0) {
+    stopTimer();
+    if (!finished) {
+      finished = true;
+      lockGrid();
+      revealCorrectHint();
+      // 시간초과: 포인트 받기 상태로
+      primaryBtn.textContent = '포인트 받기';
+      primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
+      secondaryBtn.style.display = 'none';
+    }
+  }
+}
+
+/** ====== 버튼 초기동작 (그만하기) ====== */
+primaryBtn.onclick = () => history.back();
+
+/** ====== 시작 ====== */
+buildGrid();
+startTimer();
+</script>
+</body>
+</html>

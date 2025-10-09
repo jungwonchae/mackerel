@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>고등어 – 다른 글자 찾기 (Lv.1)</title>
+<link rel="stylesheet" href="../../assets/css/game_lv1.css" />
+</head>
+<body class="main-body">
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="brand"><img src="../../assets/images/logo_app.svg" alt="고등어 로고"></div>
+      <img class="menu" src="../../assets/images/menu.svg" alt="햄버거바" onclick="location.href='../list.html'">
+    </header>
+
+    <!-- 진행 바 -->
+    <div class="progress-wrap" aria-label="남은 시간">
+      <div class="progress-fill" id="bar"></div>
+    </div>
+
+    <h1 class="title">다른 글자 찾기</h1>
+
+    <!-- 카드 그리드 -->
+    <div class="grid" id="grid">
+      <!-- JS가 아이템 채웁니다 -->
+    </div>
+
+    <!-- 버튼 영역 -->
+    <div class="btn-area" id="buttons">
+      <button class="btn-primary" id="primaryBtn">그만하기</button>
+      <!-- 정답 시 아래에 그만하기가 추가되고, 오답 시 기본 버튼 텍스트가 바뀜 -->
+    </div>
+  </div>
+
+    <script>
+    /* ====== 설정 ====== */
+    const TOTAL_TIME_MS = 15000;  // 전체 제한시간(예: 15초)
+    const WORD = "바른\n말고\n운말";      // 예시 텍스트 (개행으로 줄바꿈)
+    const ODD  = "바른\n말교\n온말";      // 하나만 다른 텍스트
+    const GRID_COUNT = 9;          // 3x3
+    const bar = document.getElementById('bar');
+    const grid = document.getElementById('grid');
+    const primaryBtn = document.getElementById('primaryBtn');
+    const buttons = document.getElementById('buttons');
+
+    let timerId, startTs;
+    let answered = false;          // 이미 정답/오답 판단됐는지
+    let correctIndex = Math.floor(Math.random()*GRID_COUNT);
+
+    /* ====== 진행바 타이머 ====== */
+    function startTimer(){
+    startTs = performance.now();
+    timerId = requestAnimationFrame(tick);
+    }
+    function tick(now){
+    const elapsed = now - startTs;
+    const remain = Math.max(0, TOTAL_TIME_MS - elapsed);
+    const pct = (remain / TOTAL_TIME_MS) * 100;
+    bar.style.width = pct + '%';
+    if (remain > 0 && !answered){
+        requestAnimationFrame(tick);
+    } else if (!answered){
+        // 시간 끝: 자동으로 오답 처리처럼 힌트만 보여주고 포인트 받기
+        revealCorrectHint();
+        toPointMode();
+    }
+    }
+
+    /* ====== 카드 생성 ====== */
+    function makeCard(text, idx){
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerText = text;
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.addEventListener('click', ()=> onPick(idx, el));
+    return el;
+    }
+
+    function buildGrid(){
+    grid.innerHTML = '';
+    for (let i=0;i<GRID_COUNT;i++){
+        const t = (i===correctIndex) ? ODD : WORD;
+        grid.appendChild(makeCard(t, i));
+    }
+    }
+
+    /* ====== 선택 로직 ====== */
+    function onPick(idx, el){
+        if (answered) return;
+        // 선택 표시
+        document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+        el.classList.add('selected');
+
+        answered = true;
+        if (idx === correctIndex) {
+            // 정답
+            el.classList.add('correct');
+            toNextMode();
+        } else {
+            // 오답 표시 (선택한 카드에 X 표시)
+            el.classList.add('wrong');
+
+            // 정답 힌트 표시(30% 파랑)
+            revealCorrectHint();
+            toPointMode();
+        }
+        // 타이머 정지(남은 시간과 무관)
+        cancelAnimationFrame(timerId);
+    }
+
+    /* 정답 카드에 힌트(30% 파랑) 표시 */
+    function revealCorrectHint(){
+        const cards = document.querySelectorAll('.card');
+        cards[correctIndex].classList.add('hint');
+    }
+
+    /* ====== 버튼 상태 변경 ====== */
+    function toNextMode(){
+    // 기본 버튼을 '다음 단계'로 변경 + 아래 보조 '그만하기' 추가
+    primaryBtn.textContent = '다음 단계';
+    primaryBtn.onclick = () => location.href = 'game_lv2.html'; // 다음 단계 페이지로 연결(원하시는 경로로 교체)
+    // 그만하기 세컨더리 추가(없을 때만)
+    if (!document.getElementById('stopBtn')){
+        const stop = document.createElement('button');
+        stop.id = 'stopBtn';
+        stop.className = 'btn-secondary';
+        stop.textContent = '그만하기';
+        stop.onclick = () => history.back(); // or 원하는 동작
+        buttons.appendChild(stop);
+    }
+    }
+
+    function toPointMode(){
+        primaryBtn.textContent = '포인트 받기';
+        primaryBtn.onclick = () => location.href = 'result.html'; // 포인트 받기 페이지로 연결(경로 조정 가능)
+    }
+
+    /* 초기 그만하기 동작 */
+    primaryBtn.onclick = () => history.back();
+
+    /* 시작 */
+    buildGrid();
+    startTimer();
+    </script>
+</body>
+</html>

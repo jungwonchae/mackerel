@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>고등어 – 다른 글자 찾기 (Lv.3)</title>
+<link rel="stylesheet" href="../../assets/css/game_lv3.css" />
+</head>
+
+<body class="main-body">
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="brand">
+        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+      </div>
+      <img class="menu" src="../../assets/images/menu.svg" alt="햄버거바" onclick="location.href='../list.html'"/>
+    </header>
+
+    <!-- 진행바 -->
+    <div class="progress-wrap" aria-label="남은 시간">
+      <div class="progress-fill" id="bar"></div>
+    </div>
+
+    <!-- 타이틀 -->
+    <h1 class="title">다른 글자 찾기</h1>
+
+    <!-- 5×5 그리드 -->
+    <div class="grid" id="grid" aria-label="선택 카드"></div>
+
+    <!-- 버튼 영역 -->
+    <div class="btn-area">
+      <button class="btn-primary" id="primaryBtn" data-action="stop">그만하기</button>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const GRID_SIZE = 5;
+  const DURATION_MS = 12000;
+
+  const grid = document.getElementById('grid');
+  const bar  = document.getElementById('bar');
+  const primaryBtn = document.getElementById('primaryBtn');
+
+  const baseTxt = '바른\n말고\n운말';
+  const oddTxt  = '바른\n맑고\n운말';
+  const totalCards = GRID_SIZE * GRID_SIZE;
+  const answerIndex = Math.floor(Math.random() * totalCards);
+
+  let finished = false;
+  let timerId = null;
+  let startTs = Date.now();
+
+  // 카드 생성
+  for (let i = 0; i < totalCards; i++) {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.dataset.index = i;
+    div.textContent = (i === answerIndex) ? oddTxt : baseTxt;
+    div.addEventListener('click', onPick);
+    grid.appendChild(div);
+  }
+
+  // 타이머 진행바
+  function tick() {
+    const elapsed = Date.now() - startTs;
+    const remain  = Math.max(0, DURATION_MS - elapsed);
+    const ratio   = remain / DURATION_MS;
+    bar.style.width = (ratio * 100).toFixed(2) + '%';
+    if (remain <= 0) {
+      clearInterval(timerId);
+      if (!finished) showResult(false);
+    }
+  }
+  timerId = setInterval(tick, 100);
+  tick();
+
+  function onPick(e) {
+    if (finished) return;
+    const card = e.currentTarget;
+    const idx  = Number(card.dataset.index);
+
+    if (idx === answerIndex) {
+      card.classList.add('correct');
+      endGame(true);
+    } else {
+      card.classList.add('selected','wrong');
+      const answerCard = grid.querySelector(`.card[data-index="${answerIndex}"]`);
+      answerCard.classList.add('hint');
+      endGame(false);
+    }
+  }
+
+  function endGame(isCorrect) {
+    finished = true;
+    clearInterval(timerId);
+    grid.querySelectorAll('.card').forEach(c => c.style.pointerEvents = 'none');
+    primaryBtn.textContent = '포인트 받기';
+    primaryBtn.dataset.action = 'claim';
+  }
+
+  // 버튼 클릭 시 이동 처리
+  primaryBtn.addEventListener('click', () => {
+    const action = primaryBtn.dataset.action;
+    if (action === 'claim') {
+      location.href = 'result.html';
+    } else {
+      history.back();
+    }
+  });
+})();
+</script>
+</body>
+</html>
