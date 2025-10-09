@@ -1,16 +1,4 @@
-/* 마이페이지 전용 스타일 (공통 토큰은 style.css 사용) */
 
-/* 헤더 */
-.app-header{
-    height: var(--header-h);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .app-header .brand img{ height:28px; }
-  .icon-btn{
-    background:transparent; border:0; padding:8px;
-    color: var(--color-text); cursor:pointer;
-  }
-  
   /* 카드 */
   .card{
     background: var(--color-bg);
@@ -105,7 +93,3 @@
 
   }
   
-  /* 작은 화면 보정 */
-  @media (max-width: 420px){
-    .avatar{ width: 200px; height: 200px; }
-  }
