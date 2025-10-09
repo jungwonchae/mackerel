@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 메뉴</title>
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/list.css">
 </head>
 <body class="menu-body">
   <!-- 닫기 버튼 -->
@@ -13,7 +13,7 @@
 
   <div class="menu-wrap">
     <!-- 로고 -->
-    <img src="./assets/logo_app.svg" alt="고등어 로고" class="menu-logo" />
+    <img src="../assets/images/logo_app.svg" alt="고등어 로고" class="menu-logo" />
 
     <!-- 네비 -->
     <nav class="nav">
@@ -22,7 +22,7 @@
 
         <li>
           <button id="boardToggle" class="nav-accordion" aria-expanded="false">
-            게시판 <span class="chev">▾</span>
+            게시판 <img src="../assets/images/down.svg" alt="열기" class="chev">
           </button>
 
           <ul id="boardSub" class="submenu">
@@ -32,7 +32,7 @@
           </ul>
         </li>
 
-        <li><a href="#">랭킹</a></li>
+        <li><a href="./ranking/ranking.html">랭킹</a></li>
         <li><a href="#">수행평가</a></li>
         <li><a href="#">마이페이지</a></li>
       </ul>
@@ -40,9 +40,9 @@
 
     <!-- 하단 -->
     <div class="menu-footer">
-      <a href="#">로그인</a>
+      <a href="./login.html">로그인</a>
       <span class="sep"> | </span>
-      <a href="#">회원가입</a>
+      <a href="./signup.html">회원가입</a>
     </div>
   </div>
 
@@ -50,11 +50,14 @@
     // 게시판 아코디언
     const toggle = document.getElementById('boardToggle');
     const sub = document.getElementById('boardSub');
+    const chev = toggle.querySelector('.chev');
 
     toggle.addEventListener('click', () => {
       const open = sub.classList.toggle('show');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.querySelector('.chev').textContent = open ? '▾' : '▴'; // 펼친 상태는 ▾
+      chev.src = open 
+        ? "../assets/images/up.svg"    // 닫힘 상태 아이콘
+        : "../assets/images/down.svg"; // 펼침 상태 아이콘
     });
   </script>
 </body>

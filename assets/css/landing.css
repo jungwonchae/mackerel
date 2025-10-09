@@ -1,0 +1,63 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+body {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+             'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #222;
+}
+
+/* Splash Screen */
+.splash {
+  background: url('../images/background.png') no-repeat center center;
+  background-size: cover;
+  background-color: #0D63ED;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* 기준 설정 */
+}
+
+.splash-container {
+  text-align: center;
+  color: white;
+}
+
+/* 왼쪽 위 텍스트 고정 */
+.text-top {
+  position: absolute;
+  top: 60px;    /* 위 여백 */
+  left: 50px;   /* 왼쪽 여백 */
+  text-align: left;
+}
+
+.text-top h1 {
+  font-size: 3rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.text-top .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* 기존 h1, subtitle 스타일 삭제 또는 위로 이동 */
+.fish {
+  width: 250px;
+  animation: float 3s ease-in-out infinite;
+  margin-top: 200px; /* 고등어 위치 조절 */
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.desc {
+  margin-top: 2rem;
+  line-height: 1.5;
+  font-size: 1rem;
+}

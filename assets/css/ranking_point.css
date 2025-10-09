@@ -1,0 +1,101 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+:root{
+  --blue:#0D63ED;
+  --ink:#111;
+  --muted:#9A9A9A;
+  --border:#ECEFF3;
+  --panel:#F7F8FA;
+}
+
+*{ box-sizing:border-box; }
+.sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+/* 공통 레이아웃 (앱 규격 동일) */
+.main-body{
+  margin:0; background:#fff; color:var(--ink);
+  font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+              'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+.app{
+  max-width:520px; margin:16px auto 24px; padding:18px; border-radius:14px;
+  background:#fff;
+}
+
+/* 헤더 */
+.app-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:6px 4px 14px;
+}
+.icon-btn{ border:0; background:transparent; padding:6px; cursor:pointer; }
+.icon-btn.back span{ font-size:22px; line-height:1; }
+.icon-btn.menu img{ width:24px; height:24px; }
+
+/* 프로필 */
+.profile{
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center;
+  gap:12px; padding:8px 2px 18px; border-bottom:0;
+}
+.avatar{
+  width:56px; height:56px; border-radius:50%; border:1px solid #E8E8E8; background:none;
+  display:grid; place-items:center; overflow:hidden;
+}
+.avatar img{ width:36px; height:36px; object-fit:contain; }
+.who .school{ color:#7E7E7E; font-size:15px; }
+.who .name{ margin-top:2px; font-weight:700; font-size:20px; }
+.grade-chip{
+  background:rgba(163, 102, 167, 0.1); color:#A366A7; font-weight:400; font-size:15px;
+  padding:6px 10px; border-radius:10px; white-space:nowrap;
+}
+
+/* 지갑 */
+.wallet {
+  margin-top: 16px;
+  background: #F8F8F8;         /* 배경색 */
+  border-radius: 10px;         /* 모서리 둥글게 */
+  padding: 12px 14px;          /* 내부 여백 */
+}
+
+.wallet .caption{ color:#7E7E7E; font-size:15px; margin: 0 0 8px 4px; }
+.wallet-box{
+  display:flex; align-items:center; gap:10px;
+  background:#fff; border: none; border-radius:12px;
+  padding:14px 16px; box-shadow:none;
+}
+.pmark{
+  display:inline-grid; place-items:center; width:22px; height:22px;
+  border-radius:50%; background:#EAF1FF; color:var(--blue); font-weight:400; font-size:15px;
+}
+.amount{ font-size:18px; font-weight:400; letter-spacing:.2px; }
+
+/* 섹션 타이틀 */
+.section-title{ margin:22px 6px 10px; font-size:20px; font-weight:600; }
+
+/* 받을 수 있는 작업들 */
+.task-list{
+  list-style:none; margin:0; padding:0;
+}
+.task-row{
+  display:grid; grid-template-columns:auto 1fr auto;
+  align-items:center; gap:12px; padding:16px 6px;
+  /* border-bottom:1px solid var(--border); */
+  cursor:pointer;
+}
+.task-row:last-child{ border-bottom:0; }
+.thumb{
+  width:44px; height:44px; border-radius:50%; background:#EDEDED;
+}
+.text{ display:flex; flex-direction:column; }
+.title{ font-size:18px; font-weight:600; color:#000000; }
+.desc{ margin-top:4px; font-size:15px; color:#7D7D7D; }
+
+.meta.pill{
+  background:#EAF1FF; color:var(--blue);
+  border-radius:999px; padding:6px 10px; font-size:15px; font-weight:400;
+}
+
+/* 작은 화면 보정 */
+@media (max-width:360px){
+  .app{ margin:8px auto; padding:14px; border-radius:10px; }
+  .title{ font-size:17px; }
+}

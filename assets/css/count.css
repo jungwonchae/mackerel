@@ -1,0 +1,65 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+/* ===== Base layout (main과 동일) ===== */
+.main-body{
+  background:#FFFFFF;
+  margin:0;
+  font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+             'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color:#111;
+}
+
+.app{
+  max-width:520px;
+  margin:16px auto 24px;
+  background:#fff;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:none;
+}
+
+/* Header */
+.app-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:6px 4px 14px;
+}
+.app-header .brand img{ width:38px; height:auto; }
+
+/* ===== Count page only ===== */
+.count-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:60vh;
+  text-align:center;
+}
+
+.text-top{
+  font-size:15px;
+  color:#000;
+  margin-bottom:8px;
+}
+
+.text-main{
+  font-size:30px;
+  font-weight:700;
+  color:#000;
+  line-height:1.4;
+  margin-bottom:40px;
+}
+
+.circle{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background-color:#0D63ED;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:32px;
+  font-weight:600;
+}

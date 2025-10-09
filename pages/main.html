@@ -4,167 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 메인</title>
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+
 </head>
-<style>
-    /* 공지 슬라이더 컨테이너 */
-    .notice-slider {
-        display: flex;
-        transition: transform 0.4s ease;
-        will-change: transform;
-    }
-
-    /* 카드 자체가 뷰포트 역할을 하도록 */
-    .notice.card {
-        overflow: hidden;        /* 좌우 넘침 잘림 */
-        position: relative;
-    }
-
-    /* 각 슬라이드(리스트) 공통 */
-    .slide {
-        flex: 0 0 100%;
-        min-width: 100%;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .task-list .row,
-    .rank-list .row,
-    .notice-list .pill {
-        padding: 12px 14px;
-    }
-
-    /* 1) 수행평가 리스트 */
-    .task-list .row {
-        display: flex; align-items: center; justify-content: space-between;
-        border-bottom: 1px solid #EAEAEA;
-    }
-    .task-list .row:last-child { border-bottom: none; }
-    .task-list .subject { font-weight: 500; font-size: 15px; color: #3A3A3A; }
-    .task-list .meta { display:block; font-size: 12px; color:#9A9A9A; margin-top:4px; }
-    .due { 
-        font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px;
-        background: #EEF4FF; color: #0D63ED;
-    }
-    .due.D1 { background:#FFEDEE; color:#E44040; }  /* 레드 */
-    .due.D2 { background:#FFF7E6; color:#C77B00; }  /* 주황 */
-    .due.D3 { background:#EEF4FF; color:#0D63ED; }  /* 블루 */
-
-    /* 2) 랭킹 리스트 */
-    .rank-list .row {
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 12px 14px; border-bottom:1px solid #EAEAEA;
-    }
-    .rank-list .row:last-child { border-bottom:none; }
-    .rank-list .badge {
-    display:inline-flex; align-items:center; justify-content:center;
-    width:28px; height:28px; border-radius:50%; font-weight:700; font-size:14px; color:#fff;
-    }
-    .rank1{ background:#FFD233; color:#473700; }
-    .rank2{ background:#BFC7D5; color:#2E3440; }
-    .rank3{ background:#E6A26B; color:#4D2A10; }
-    .rank-list .name { margin-left:8px; flex:1; color:#3A3A3A; font-size:15px; font-weight:500; }
-    .rank-list .score { color:#7E7E7E; font-size:13px; font-weight:600; }
-
-    /* 3) 공지사항 리스트(기존 스타일 미세 조정) */
-    .notice-list .pill {
-        display:flex; align-items:center; justify-content:space-between;
-        background: transparent; border-bottom:1px solid #E5E5E5;
-        padding:12px 14px; margin:0;
-    }
-    .notice-list .pill:last-child{ border-bottom:none; }
-    .notice-list .text{ font-weight:400; font-size:15px; color:#7E7E7E; }
-    .notice-list .time{ font-weight:400; font-size:10px; color:#7E7E7E; white-space:nowrap; }
-</style>
 <body class="main-body">
   <div class="app">
     <!-- 헤더 -->
     <header class="app-header">
       <div class="brand">
-        <img src="./assets/logo_app.svg" alt="고등어 로고" />
+        <img src="../assets/images/logo_app.svg" alt="고등어 로고" />
       </div>
-      <img src="./assets/menu.svg" alt="햄버거바" id="menuBtn" style="cursor:pointer;" />
+      <img src="../assets/images/menu.svg" alt="햄버거바" id="menuBtn" style="cursor:pointer;" />
     </header>
 
-    <!-- 공지사항 카드 -->
+    <!-- 상단 카드 슬라이더 -->
     <section class="notice card">
-        <div class="section-title">
-        <!-- 슬라이드에 맞춰 제목도 자동 변경됨 -->
-        <h2 id="noticeTitle">마감 임박 수행평가</h2>
-        <a href="#" class="more">더보기 <span class="chev">›</span></a>
-        </div>
     
-        <!-- 슬라이더 전체 -->
-        <div class="notice-slider" id="noticeSlider">
+      <div class="panes" id="noticePanes">
         <!-- 1) 마감 임박 수행평가 -->
-        <ul class="task-list slide">
-            <li class="row">
-            <span class="left">
-                <strong class="subject">과학 수행 – 광합성 실험 보고서</strong>
-                <span class="meta">2-3 담임 홍길동</span>
-            </span>
-            <span class="due D1">D-1</span>
+        <div class="pane slide">
+          <div class="pane-title">마감일 임박 수행평가</div>
+          <ul class="pane-list">
+            <li class="pane-item">
+              <div class="left">
+                <div class="tag">개인일정</div>
+                <div class="title">전국연합(1,2) 수능모의(3)</div>
+                <div class="date">2025-09-03</div>
+              </div>
+              <div class="badge red">D-1</div>
             </li>
-            <li class="row">
-            <span class="left">
-                <strong class="subject">국어 발표 – 논증 구조</strong>
-                <span class="meta">1-5 담임 홍길동</span>
-            </span>
-            <span class="due D2">D-2</span>
+            <li class="pane-item">
+              <div class="left">
+                <div class="tag">개인일정</div>
+                <div class="title">전국연합(1,2) 수능모의(3)</div>
+                <div class="date">2025-09-03</div>
+              </div>
+              <div class="badge red">D-1</div>
             </li>
-            <li class="row">
-            <span class="left">
-                <strong class="subject">수학 포트폴리오 – 미분 응용</strong>
-                <span class="meta">3-2 담임 홍길동</span>
-            </span>
-            <span class="due D3">D-3</span>
-            </li>
-        </ul>
-    
-        <!-- 2) 랭킹 -->
-        <ul class="rank-list slide">
-            <li class="row">
-                <span class="badge rank1">1</span>
-                <span class="name">홍길동</span>
-                <span class="score">1500점</span>
-            </li>
-            <li class="row">
-                <span class="badge rank2">2</span>
-                <span class="name">홍길동</span>
-                <span class="score">1000점</span>
-            </li>
-            <li class="row">
-                <span class="badge rank3">3</span>
-                <span class="name">홍길동</span>
-                <span class="score">960점</span>
-            </li>
-        </ul>
-    
-        <!-- 3) 공지사항 -->
-        <ul class="notice-list slide">
-            <li class="row">
-                <span class="text">학교 축제 일정 공지</span>
-                <span class="time">10분전</span>
-            </li>
-            <li class="row">
-                <span class="text">도서관 이용 시간 변경</span>
-                <span class="time">30분전</span>
-            </li>
-            <li class="row">
-                <span class="text">급식 설문 참여 안내</span>
-                <span class="time">1시간전</span>
-            </li>
-        </ul>
+          </ul>
         </div>
     
-        <div class="dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+        <!-- 2) 실시간 랭킹 -->
+        <div class="pane slide">
+          <div class="pane-title">실시간 랭킹</div>
+          <ul class="rank-list compact">
+            <li class="rank-row">
+              <span class="rno r1">1</span>
+              <span class="name">홍길동</span>
+              <span class="score">1000점</span>
+            </li>
+            <li class="rank-row">
+              <span class="rno r2">2</span>
+              <span class="name">김길동</span>
+              <span class="score">1000점</span>
+            </li>
+            <li class="rank-row">
+              <span class="rno r3">3</span>
+              <span class="name">박길동</span>
+              <span class="score">1000점</span>
+            </li>
+          </ul>
         </div>
+    
+        <!-- 3) 인기글 -->
+        <div class="pane slide">
+          <div class="pane-title">인기글</div>
+          <ul class="hot-list">
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="title">오늘 2학년 야자 있음?</span>
+              <span class="time">1분전</span>
+            </li>
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="title">급식 스프 좀</span>
+              <span class="time">1분전</span>
+            </li>
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="title">체인소맨 본사람</span>
+              <span class="time">1분전</span>
+            </li>
+            <li class="hot-row">
+              <span class="board">자유게시판</span>
+              <span class="title">체인소맨 본사람</span>
+              <span class="time">1분전</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
+    <div class="dots mobile-only">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
 
     <!-- 자유게시판 -->
     <section class="board">
@@ -232,44 +166,41 @@
       </ul>
     </section>
   </div>
+
   <script>
     // 메뉴 버튼 이동
     document.getElementById('menuBtn').addEventListener('click', () => {
       window.location.href = 'list.html';
     });
-  
-    // ===== 공지/랭킹/수행평가 슬라이더 =====
-    const slider = document.getElementById('noticeSlider');
+
+    // ===== 공지 패널 슬라이더 (모바일용) =====
+    const panes = document.getElementById('noticePanes');
     const dots = document.querySelectorAll('.dots .dot');
-    const titleEl = document.getElementById('noticeTitle');
-  
-    const titles = ['마감 임박 수행평가', '랭킹', '공지사항'];
     let currentIndex = 0;
-  
+
     function updateDots(i){
       dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
     }
+
     function moveTo(i){
-      slider.style.transform = `translateX(${-i * 100}%)`;
-      titleEl.textContent = titles[i];
+      if (window.matchMedia('(min-width: 900px)').matches) return;
+      panes.style.transform = `translateX(${-i * 100}%)`;
       updateDots(i);
     }
-  
-    // dot 클릭 이동
+
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => {
         currentIndex = i;
         moveTo(currentIndex);
       });
     });
-  
-    // 자동 전환
+
     setInterval(() => {
-      currentIndex = (currentIndex + 1) % titles.length;
+      if (window.matchMedia('(min-width: 900px)').matches) return;
+      currentIndex = (currentIndex + 1) % 3;
       moveTo(currentIndex);
-    }, 6000); // 6초마다
-  
-    // 초기화
+    }, 7000);
+
     moveTo(0);
   </script>
 </body>
