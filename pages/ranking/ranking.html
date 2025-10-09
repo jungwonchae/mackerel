@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 랭킹</title>
+  <link rel="stylesheet" href="../../assets/css/ranking.css" />
+</head>
+<body class="main-body">
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="app-header">
+        <div class="brand">
+        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        </div>
+        <img src="../../assets/images/menu.svg" 
+            alt="햄버거바" 
+            id="menuBtn" 
+            style="cursor:pointer;" 
+            onclick="location.href='../list.html'" />
+    </header>
+
+    <!-- 상단 탭 -->
+    <nav class="rank-tabs" role="tablist" aria-label="랭킹 보기 전환">
+      <button class="tab on" role="tab" aria-selected="true" data-target="tab-individual">개인</button>
+      <button class="tab" role="tab" aria-selected="false" data-target="tab-class">반</button>
+    </nav>
+
+    <!-- 포디움 (개인) -->
+    <section id="tab-individual" class="tab-panel show" role="tabpanel">
+      <div class="podium">
+        <!-- 2등 -->
+        <div class="podium-col place2">
+          <div class="chip chip-green">챌린저</div>
+          <div class="avatar"><img src="../../assets/images/fish.png" alt="" /></div>
+          <div class="nick">김길동</div>
+          <div class="point small">990</div>
+          <div class="block rank-pill">2</div>
+        </div>
+
+        <!-- 1등 -->
+        <div class="podium-col place1">
+          <div class="chip chip-yellow">챌린저</div>
+          <div class="avatar big"><img src="../../assets/images/fish.png" alt="" /></div>
+          <div class="nick">홍길동</div>
+          <div class="point">1000</div>
+          <div class="block rank-pill big">1</div>
+        </div>
+
+        <!-- 3등 -->
+        <div class="podium-col place3">
+          <div class="chip chip-green">챌린저</div>
+          <div class="avatar"><img src="../../assets/images/fish.png" alt="" /></div>
+          <div class="nick">박길동</div>
+          <div class="point small">900</div>
+          <div class="block rank-pill">3</div>
+        </div>
+      </div>
+
+      <!-- 내 등수 카드 -->
+      <div class="my-rank" aria-label="내 등수">
+        <span class="order">10등</span>
+        <span class="who">
+          <img src="../../assets/images/fish.png" alt="" class="mini" />
+          <span class="name">홍길동</span>
+        </span>
+        <span class="badge grade">마스터</span>
+        <span class="p">550</span>
+      </div>
+
+      <!-- 정렬 헤더 -->
+      <div class="list-header">
+        <span>등수</span>
+        <button class="sort" id="sortBtn" aria-pressed="false">
+          높은순 <img src="../../assets/images/up.svg" alt="위쪽 화살표" class="chev" style="width:10px; height:10px; vertical-align:middle;" />
+        </button>
+      </div>
+
+      <!-- 랭킹 리스트 -->
+      <ul class="rank-list">
+        <li class="rank-row">
+          <span class="order">4등</span>
+          <span class="who">
+            <img src="../../assets/images/fish.png" alt="" class="mini" />
+            <span class="name">홍길동</span>
+          </span>
+          <span class="badge grade">마스터</span>
+          <span class="p">550</span>
+        </li>
+        <li class="rank-row">
+          <span class="order">5등</span>
+          <span class="who">
+            <img src="../../assets/images/fish.png" alt="" class="mini" />
+            <span class="name">홍길동</span>
+          </span>
+          <span class="badge grade">마스터</span>
+          <span class="p">550</span>
+        </li>
+        <li class="rank-row">
+          <span class="order">6등</span>
+          <span class="who">
+            <img src="../../assets/images/fish.png" alt="" class="mini" />
+            <span class="name">홍길동</span>
+          </span>
+          <span class="badge grade">마스터</span>
+          <span class="p">550</span>
+        </li>
+        <li class="rank-row">
+          <span class="order">7등</span>
+          <span class="who">
+            <img src="../../assets/images/fish.png" alt="" class="mini" />
+            <span class="name">홍길동</span>
+          </span>
+          <span class="badge grade">마스터</span>
+          <span class="p">550</span>
+        </li>
+      </ul>
+
+      <!-- 포인트 받기 버튼 -->
+      <button class="cta">포인트 받기</button>
+    </section>
+
+    <!-- 반 탭 패널 (샘플) -->
+    <section id="tab-class" class="tab-panel" role="tabpanel" hidden>
+      <div class="empty">반 랭킹은 준비 중이에요.</div>
+    </section>
+  </div>
+
+  <script>
+    document.querySelector('.cta').addEventListener('click', () => {
+        window.location.href = 'ranking_point.html';
+    });
+    
+    // 탭 전환
+    const tabs = document.querySelectorAll('.rank-tabs .tab');
+    const panels = document.querySelectorAll('.tab-panel');
+    
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        panels.forEach(p => {
+          const show = p.id === btn.dataset.target;
+          p.toggleAttribute('hidden', !show);
+          p.classList.toggle('show', show);
+        });
+      });
+    });
+
+    // 정렬 버튼 (데모용 토글 UI만)
+    const sortBtn = document.getElementById('sortBtn');
+    sortBtn?.addEventListener('click', () => {
+      const pressed = sortBtn.getAttribute('aria-pressed') === 'true';
+      sortBtn.setAttribute('aria-pressed', String(!pressed));
+      
+      // 아이콘 변경
+      const chevIcon = sortBtn.querySelector('.chev');
+      chevIcon.src = pressed 
+        ? "../../assets/images/up.svg" 
+        : "../../assets/images/down.svg"; // 내려가는 아이콘도 준비해두면 좋음
+    });
+  </script>
+</body>
+</html>

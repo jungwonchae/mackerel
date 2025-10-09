@@ -1,0 +1,162 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+.main {
+    padding: 1.5rem;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+  
+  .logo img {
+    width: 28px;
+  }
+  
+  .menu {
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+  
+  section {
+    margin-bottom: 2rem;
+  }
+  
+  section h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  li {
+    padding: 0.9rem 1rem;
+    /* border-bottom: 1px solid #eee; */
+  }
+  
+  li:last-child {
+    border-bottom: none;
+  }
+  
+  li:hover {
+    background-color: #f5f9ff;
+  }
+
+/* ===== list Page ===== */
+.menu-body {
+    margin: 0;
+    background: #FFFFFF;
+    font-family: 'Pretendard', sans-serif;
+    min-height: 100vh;
+  }
+  
+  .menu-close {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    font-size: 24px;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+  }
+  
+  .menu-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 64px 28px 32px; /* 위쪽 여백 넉넉히 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  .menu-logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 22px;
+  }
+  
+  /* 항목 공통 */
+  .nav { width: 100%; }
+  .nav-list { 
+    list-style: none; padding: 0; margin: 0; text-align: center; 
+    background: #FFFFFF;
+    box-shadow: none;
+    border: none;
+  }
+  
+  .nav-list > li { margin: 18px 0; }
+  
+  .nav-list a,
+  .nav-accordion {
+    font-size: 18px;
+    color: #000000;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .nav-list a.active { color: #0D63ED; font-weight: 600; } /* 현재 페이지 파란색 */
+  
+  .nav-accordion .chev {
+    margin-left: 6px;
+    font-size: 16px;
+  }
+  
+  /* 서브메뉴 박스 */
+  .submenu {
+    display: none;
+    margin: 12px auto 0;
+    width: 86%;
+    background: #F5F5F5;
+    border-radius: 14px;
+  }
+  .submenu.show { display: block; }
+  
+  .submenu li { margin: 0; }
+  .submenu a {
+    display: block;
+    color: #7E7E7E;
+    font-size: 15px;
+    font-weight: 400;       /* Regular */
+  }
+  
+  /* 하단 로그인/회원가입 */
+  .menu-footer {
+    margin-top: auto;
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 10px;
+  }
+  .menu-footer a {
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+  }
+  .menu-footer .sep { color: #BDBDBD; }
+  
+  /* 작은 화면 */
+  @media (max-width: 360px) {
+    .menu-wrap { padding: 56px 20px 24px; }
+    .nav-list a, .nav-accordion { font-size: 17px; }
+    .menu-footer { font-size: 16px; }
+  }
+
+  /* 아이콘 위치 내리기 */
+  .nav-accordion .chev {
+    transform: translateY(4px); /* 아래로 2px 이동 */
+  }

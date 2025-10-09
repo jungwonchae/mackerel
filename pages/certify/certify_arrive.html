@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 등교 인증</title>
+  <link rel="stylesheet" href="../../assets/css/certify_task.css" />
+</head>
+<body class="main-body">
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="brand">
+        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+      </div>
+      <img
+        src="../../assets/images/menu.svg"
+        alt="햄버거바"
+        id="menuBtn"
+        class="menu-btn"
+        style="cursor:pointer;"
+        onclick="location.href='../list.html'"
+      />
+    </header>
+
+    <!-- 본문 -->
+    <main class="certify-wrap">
+      <p class="eyebrow">포인트를 얻기 위해</p>
+      <h1 class="title">
+        등교 인증을<br/>
+        해보세요
+      </h1>
+
+      <!-- 일러스트(예시) -->
+      <img src="../../assets/images/certify_map.svg" alt="" class="hero-illust" />
+
+      <!-- CTA -->
+      <button class="primary" id="goCert">내 위치 인증하기</button>
+    </main>
+  </div>
+
+  <script>
+    // CTA 클릭 시 다음 단계로 이동 (필요 시 파일명 바꿔줘)
+    document.getElementById('goCert').addEventListener('click', () => {
+        alert('위치, 시간 연동이 필요합니다.(연동 예정)');
+        location.href = './result.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 포인트</title>
+  <link rel="stylesheet" href="../../assets/css/ranking_point.css" />
+</head>
+<body class="main-body">
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <button class="icon-btn back" aria-label="뒤로" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="">
+      </button>
+      <h1 class="sr-only">포인트</h1>
+      <button class="icon-btn menu" aria-label="메뉴" onclick="location.href='../../pages/list.html'">
+        <img src="../../assets/images/menu.svg" alt="">
+      </button>
+    </header>
+
+    <!-- 프로필 -->
+    <section class="profile">
+      <div class="avatar">
+        <img src="../../assets/images/fish.png" alt="">
+      </div>
+      <div class="who">
+        <div class="school">포항고</div>
+        <div class="name">홍길동</div>
+      </div>
+      <span class="grade-chip">그랜드 마스터</span>
+    </section>
+
+    <!-- 보유 포인트 -->
+    <section class="wallet">
+      <div class="caption">보유 포인트</div>
+      <div class="wallet-box">
+        <span class="pmark">P</span>
+        <strong class="amount">100,000</strong>
+      </div>
+    </section>
+
+    <!-- 포인트 받기 -->
+    <section class="earn">
+      <h2 class="section-title">포인트 받기</h2>
+
+      <ul class="task-list">
+        <li class="task-row" onclick="location.href='../certify/certify_task.html'">
+          <span class="thumb"></span>
+          <span class="text">
+            <span class="title">오늘의 과제</span>
+            <span class="desc">과제 인증 하러 가기</span>
+          </span>
+          <span class="meta"></span>
+        </li>
+
+        <li class="task-row" onclick="location.href='../certify/certify_arrive.html'">
+          <span class="thumb"></span>
+          <span class="text">
+            <span class="title">등교 인증</span>
+            <span class="desc">오늘의 등교 인증</span>
+          </span>
+          <span class="meta pill">30분 남음</span>
+        </li>
+
+        <li class="task-row" onclick="location.href='../game/count.html'">
+          <span class="thumb"></span>
+          <span class="text">
+            <span class="title">다른 글자 찾기</span>
+            <span class="desc">과제 인증 하러 가기</span>
+          </span>
+          <span class="meta pill">2회 남음</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 로그인</title>
+  <link rel="stylesheet" href="../assets/css/login.css" />
+</head>
+<body class="auth-body">
+  <main class="auth-card">
+    <!-- 로고 -->
+    <img src="../assets/images/logo_app.svg" alt="고등어 로고" class="auth-logo" />
+
+    <!-- 타이틀 -->
+    <h1 class="auth-title">로그인</h1>
+
+    <!-- 구글 로그인 버튼 -->
+    <button class="google-btn" id="googleSignIn" type="button" aria-label="구글로 회원가입/로그인">
+      <img class="g-icon" src="../assets/images/google.svg" alt="" aria-hidden="true" />
+      <span>Sign up with Google</span>
+    </button>
+
+    <!-- 하단 안내 -->
+    <p class="auth-sub">
+      <a href="signup.html">아직 회원이 아니신가요?</a>
+    </p>
+  </main>
+
+  <script>
+    // TODO: 실제 Google OAuth 연동 지점
+    document.getElementById('googleSignIn').addEventListener('click', () => {
+      // 예: location.href = '/auth/google';
+      alert('Google OAuth 연동 지점입니다.');
+    });
+  </script>
+</body>
+</html>

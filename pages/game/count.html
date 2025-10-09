@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>카운트다운</title>
+  <link rel="stylesheet" href="../../assets/css/count.css">
+</head>
+<body class="main-body">
+    <div class="app">
+       <!-- 헤더 -->
+        <header class="app-header">
+            <div class="brand">
+            <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+            </div>
+            <img src="../../assets/images/menu.svg" alt="햄버거바" id="menuBtn" style="cursor:pointer;" />
+      </header>
+  
+      <main class="count-container">
+        <div class="text-top">포인트를 얻기 위해</div>
+        <div class="text-main">다르게 적힌 글자를<br>찾아보세요</div>
+        <div class="circle" id="count">3</div>
+      </main>
+    </div>
+  
+    <script>
+        // 메뉴 버튼 이동
+        document.getElementById('menuBtn').addEventListener('click', () => {
+        window.location.href = '../list.html';
+        });
+        let count = 3;
+        const el = document.getElementById('count');
+        const timer = setInterval(() => {
+            count--;
+            el.textContent = count;
+            if (count === 0) {
+            clearInterval(timer);
+            // window.location.href = "game.html";
+            }
+        }, 1000);
+    </script>
+  </body>
+</html>
