@@ -49,7 +49,7 @@
   --header-h: 64px;
 }
 
-/* 다크모드 기본 팔레트 */
+/* 다크모드 기본 팔레트
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #0c1118;
@@ -58,7 +58,7 @@
     --color-border: #223047;
     --color-surface: #0f141b;
   }
-}
+} */
 
 /* 리셋 */
 *,
