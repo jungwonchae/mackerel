@@ -1,10 +1,10 @@
-<!-- class/add_personal.html 페이지 -->
+<!-- class/add_personal.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class/option</title>
+  <title>개인일정 추가</title>
 
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -17,61 +17,112 @@
     
     <!-- 헤더 -->
     <header class="app-header">
-        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
-            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
-          </button>
-    
-          <p class="title">개인일정 추가</p>
-
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+      <p class="title">개인일정 추가</p>
       <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
     
+    <!-- 본문 -->
+    <main class="container add-form">
+      <!-- 제목 입력 -->
+      <input 
+        type="text" 
+        class="input-title" 
+        placeholder="제목을 입력해주세요." 
+      />
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>class/add_personal 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+      <!-- 날짜 유형 -->
+      <div class="form-group">
+        <label class="label">날짜 유형</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="dateType" value="single">
+            <span>단일 날짜</span>
+          </label>
+          <label>
+            <input type="radio" name="dateType" value="range" checked>
+            <span>기간 선택</span>
+          </label>
+        </div>
+      </div>
 
+      <!-- 날짜 선택 -->
+      <div class="date-inputs">
+        <div class="date-row single-date hidden">
+          <input type="date" class="date-field"> <span>일자</span>
+        </div>
+        <div class="date-row range-date">
+          <input type="date" class="date-field" value="2025-10-01"> <span>부터</span>
+        </div>
+        <div class="date-row range-date">
+          <input type="date" class="date-field" value="2025-10-05"> <span>까지</span>
+        </div>
+      </div>
+
+      <!-- 링크 입력 -->
+      <input 
+        type="text" 
+        class="input-link" 
+        placeholder="연결 링크를 입력해주세요." 
+      />
+
+      <!-- 작성 버튼 -->
+      <button class="submit-btn">
+        <img src="../../assets/images/send.svg" alt="작성 완료" />
+        작성 완료
+      </button>
     </main>
   </div>
-
   
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- === 공통 메뉴 오버레이 === -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
-
     <div class="menu-logo">
       <img src="/assets/images/logo_app.svg" alt="고등어" />
     </div>
-
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
-
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
-
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
       <a href="/pages/mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
     </nav>
-
     <div class="menu-auth">
       <a href="/pages/login.html">로그인</a> | <a href="/pages/signup.html">회원가입</a>
     </div>
   </div>
 
-  <!-- 공통 스크립트 -->
+  <!-- 스크립트 -->
+  <script>
+    // 라디오 선택에 따라 단일/기간 노출
+    const radios = document.querySelectorAll("input[name='dateType']");
+    const singleDate = document.querySelector(".single-date");
+    const rangeDates = document.querySelectorAll(".range-date");
+
+    radios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        if(radio.value === "single" && radio.checked){
+          singleDate.classList.remove("hidden");
+          rangeDates.forEach(el => el.classList.add("hidden"));
+        } else if(radio.value === "range" && radio.checked){
+          singleDate.classList.add("hidden");
+          rangeDates.forEach(el => el.classList.remove("hidden"));
+        }
+      });
+    });
+  </script>
   <script defer src="/assets/js/main.js"></script>
 </body>
 </html>

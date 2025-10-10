@@ -1,44 +1,53 @@
-<!-- class/option.html 페이지 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class/option</title>
+  <title>일정 추가</title>
 
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- 페이지 전용 -->
   <link rel="stylesheet" href="/assets/css/option.css">
 </head>
 
-<!-- 현재 위치 표시: tasks(수행평가) -->
 <body class="main-body" data-active="tasks">
   <div class="app">
-    
-    <!-- 헤더 -->
+    <!-- ===== 헤더 ===== -->
     <header class="app-header">
-        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
-            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
-          </button>
-    
-          <p class="title">일정추가</p>
-
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="/assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+      <p class="title">일정 추가</p>
       <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
-    
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>class/option 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+    <!-- ===== 본문 ===== -->
+    <main class="option-container">
+      <h2 class="question">어떤 일정을 <br/> 추가하시겠어요?</h2>
 
+      <div class="option-list" role="listbox" aria-label="일정 종류 선택">
+        <button class="option-btn" data-target="/pages/class/add_personal.html" aria-selected="false">
+          개인 일정
+        </button>
+        <button class="option-btn" data-target="/pages/class/add_hw.html" aria-selected="false">
+          수행 평가 <small>(*나중에 선생 코드 확인 예정)</small>
+        </button>
+        <button class="option-btn" data-target="/pages/class/add_test.html" aria-selected="false">
+          자필 평가 <small>(*나중에 선생 코드 확인 예정)</small>
+        </button>
+      </div>
+
+      <!-- 하단 고정 버튼 -->
+      <div class="footer">
+        <button id="nextBtn" class="next-btn" type="button" disabled>다음</button>
+      </div>
     </main>
   </div>
 
-  
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
@@ -49,17 +58,16 @@
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
 
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
+      <!-- 게시판 아코디언 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
 
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
@@ -70,6 +78,34 @@
       <a href="/pages/login.html">로그인</a> | <a href="/pages/signup.html">회원가입</a>
     </div>
   </div>
+
+  <!-- ===== 페이지 JS ===== -->
+  <script>
+    const options = Array.from(document.querySelectorAll('.option-btn'));
+    const nextBtn = document.getElementById('nextBtn');
+    let targetHref = null;
+
+    // 선택 처리
+    options.forEach(btn => {
+      btn.addEventListener('click', () => {
+        options.forEach(b => {
+          b.classList.remove('selected');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('selected');
+        btn.setAttribute('aria-selected', 'true');
+
+        targetHref = btn.dataset.target;
+        nextBtn.disabled = false;
+        nextBtn.classList.add('active');
+      });
+    });
+
+    // 다음으로 이동
+    nextBtn.addEventListener('click', () => {
+      if (targetHref) location.href = targetHref;
+    });
+  </script>
 
   <!-- 공통 스크립트 -->
   <script defer src="/assets/js/main.js"></script>

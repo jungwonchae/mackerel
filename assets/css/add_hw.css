@@ -1,0 +1,177 @@
+/* ========= 수행평가 추가 ========= */
+
+/* 레이아웃 */
+.hw-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-top:16px;
+  }
+  
+  /* 공통 인풋 */
+  .input{
+    width:100%;
+    padding:14px;
+    border:1px solid #E5E7EB;
+    border-radius:12px;
+    font-size:15px;
+    background:#F8F8F8;
+  }
+  
+  /* 섹션 라벨 */
+  .label{
+    font-size:16px;
+    font-weight:700;
+    margin:2px 0 8px;
+    color:#111;
+  }
+  
+  /* 라디오 — 커스텀 원형 + 내부 점 */
+  .radio-col{ display:flex; flex-direction:column; gap:10px; }
+  .radio{ display:inline-flex; align-items:center; gap:10px; font-size:15px; color:#111; cursor:pointer; }
+  
+  .radio input[type="radio"]{
+    appearance:none;
+    width:18px; height:18px;
+    border:2px solid #9CA3AF;          /* 회색 테두리 */
+    border-radius:50%;
+    outline:0;
+    position:relative;
+    transition:border-color .15s ease, box-shadow .15s ease;
+    background:#fff;
+  }
+  .radio input[type="radio"]:hover{
+    box-shadow:0 0 0 3px rgba(13,99,237,.15);
+  }
+  .radio input[type="radio"]:checked{
+    border-color:#0D63ED;
+  }
+  .radio input[type="radio"]:checked::after{
+    content:"";
+    position:absolute;
+    inset:4px;                          /* 내부 점 크기 */
+    border-radius:50%;
+    background:#0D63ED;
+  }
+  
+  /* 날짜 */
+  .date-wrap{ display:flex; flex-direction:column; gap:10px; }
+  .date-row{ display:flex; align-items:center; gap:8px; }
+  .date-field{
+    flex:1;
+    padding:12px 14px;
+    border:1px solid #E5E7EB;
+    border-radius:12px;
+    background:#fff;
+    font-size:15px;
+  }
+  .date-field:focus{
+    border-color:#0D63ED;
+    box-shadow:0 0 0 3px rgba(13,99,237,.15);
+  }
+  .date-row .suffix{ color:#111; font-size:15px; }
+  .hidden{ display:none; }
+  
+  /* 요일 원형 */
+  .weekday-head{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    text-align:center;
+    gap:8px;
+    color:#6B7280;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .weekday-pills{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+  }
+  .pill{
+    width:100%;
+    aspect-ratio:1/1;
+    border:1px solid #E5E7EB;
+    border-radius:999px;
+    background:#fff;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .pill:hover{ box-shadow:0 0 0 3px rgba(13,99,237,.15); }
+  .pill.on{
+    background:#E7F0FF;
+    border-color:#0D63ED;
+    box-shadow:0 0 0 2px rgba(13,99,237,.08) inset;
+  }
+  
+  
+  /* 선택 아코디언 (2열) */
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .select-acc{ width:100%; }
+  .acc-head{
+    width:100%;
+    text-align:left;
+    padding:16px 14px;
+    background:#F7F7F7;
+    border:0;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:#6B7280;
+    font-size:16px;
+    cursor:pointer;
+    transition:background .15s ease, box-shadow .15s ease;
+  }
+  .acc-head:hover{ box-shadow:0 0 0 3px rgba(0,0,0,.04) inset; }
+  .acc-head .chev{ width:18px; height:18px; }
+  
+  .acc-body{
+    margin-top:8px;
+    padding:6px;
+    border:1px solid #E5E7EB;
+    border-radius:12px;
+    background:#fff;
+    list-style:none;        /* 불릿 제거 */
+  }
+  .acc-body li{
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:background .12s ease, color .12s ease;
+    list-style:none;        /* 혹시 모를 불릿 제거 */
+  }
+  .acc-body li:hover{
+    background:#F3F4F6;
+  }
+  .acc-body li.active{
+    background:#E7F0FF;
+    color:#0D63ED;
+    font-weight:600;
+  }
+  
+  /* 작성 버튼 */
+  .submit-btn{
+    margin-top:24px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:center;
+    padding:16px 18px;
+    border:0;
+    border-radius:28px;
+    background:#0D63ED;
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+  }
+  .submit-btn img{ width:18px; height:18px; }
+  
+  /* 반응형 */
+  @media (max-width:420px){
+    .grid-2{ grid-template-columns:1fr; }
+  }
+  

@@ -1,0 +1,75 @@
+/* ===== option.css ===== */
+.option-container{
+    padding: 24px;
+    text-align: center;
+  }
+  
+  .question{
+    font-size: 22px;
+    font-weight: 700;
+    margin: 28px 0 32px;
+  }
+  
+  .option-list{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  
+  .option-btn{
+    width: 100%;
+    padding: 18px 16px;
+    border-radius: 10px;
+    font-size: 18px;
+    background: #f6f7f9;
+    border: 0px solid;
+    color: #222;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, color .2s ease, transform .04s ease;
+  }
+  .option-btn small{
+    display:block;
+    margin-top:6px;
+    font-size:12px;
+    color:#8a8f98;
+    font-weight:400;
+  }
+  .option-btn:active{ transform: translateY(1px); }
+  
+  .option-btn.selected{
+    background: #EAF1FF;
+    border-color: #0D63ED;
+    color: #0D63ED;
+    font-weight: 700;
+  }
+  
+  .footer{
+    position: fixed;
+    left: 0; right: 0; bottom: 20px;
+    display: flex; justify-content: center;
+  }
+  
+  .next-btn{
+    width: min(92%, 420px);
+    padding: 14px 18px;
+    border-radius: 28px;
+    border: none;
+    background: #C7CBD3;  /* 비활성 */
+    color: #fff;
+    font-size: 16px;
+    cursor: not-allowed;
+    transition: background .2s ease, transform .04s ease;
+  }
+  .next-btn.active{
+    background: #0D63ED;
+    cursor: pointer;
+  }
+  .next-btn.active:active{ transform: translateY(1px); }
+  
+  /* 작은 화면 보정 */
+  @media (max-width:380px){
+    .question{ font-size: 17px; }
+    .option-btn{ font-size: 16px; padding: 16px; }
+  }
+  

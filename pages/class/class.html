@@ -1,21 +1,20 @@
-<!-- class.html 페이지 -->
+<!-- pages/class/class.html : 수행평가/일정 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class</title>
+  <title>고등어 – 수행평가</title>
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/class.css">
+  <!-- 공통/페이지 스타일 -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/class.css" />
 </head>
 
 <!-- 현재 위치 표시: tasks(수행평가) -->
 <body class="main-body" data-active="tasks">
   <div class="app">
-    
-    <!-- 헤더 -->
+    <!-- ===== 헤더 ===== -->
     <header class="app-header">
       <div class="brand">
         <a href="/pages/index.html">
@@ -26,18 +25,58 @@
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
-    
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>class.html 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+    <!-- ===== 본문 ===== -->
+    <main class="container tasks-page">
+      <!-- 캘린더 카드 -->
+      <section class="card calendar-card" aria-label="달력">
+        <div class="cal-head">
+          <button class="cal-nav" id="prevMonth" aria-label="이전 달">&lsaquo;</button>
+          <h2 class="cal-title"><span id="calMonth">September</span> <span id="calYear">2025</span></h2>
+          <button class="cal-nav" id="nextMonth" aria-label="다음 달">&rsaquo;</button>
+        </div>
 
+        <div class="cal-weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+        </div>
+        <div class="cal-grid" id="calGrid" role="grid" aria-label="날짜 선택">
+          <!-- JS가 날짜를 채웁니다 -->
+        </div>
+      </section>
+
+      <!-- 범례 -->
+      <div class="legend">
+        <span class="dot red"></span> 휴일
+        <span class="dot yellow"></span> 지필평가
+        <span class="dot green"></span> 학교행사
+        <span class="dot blue"></span> 개인일정
+      </div>
+
+      <!-- 필터/정렬 바 -->
+      <div class="toolbar">
+        <div class="seg">
+          <button class="seg-btn active" id="tabAll" aria-pressed="true">전체</button>
+          <button class="seg-btn" id="tabMine" aria-pressed="false">내 수행</button>
+        </div>
+
+        <button class="sort" id="sortBtn" data-order="desc" aria-pressed="false">
+          최신순 <img src="/assets/images/up.svg" alt="" class="chev" />
+        </button>
+      </div>
+
+      <!-- 일정 리스트 -->
+      <section class="list-wrap" aria-live="polite">
+        <ul class="task-list" id="taskList">
+          <!-- JS가 선택한 날짜의 일정을 렌더링 -->
+        </ul>
+      </section>
+
+      <!-- 플로팅 버튼 -->
+      <a href="/pages/class/option.html" class="fab" aria-label="일정 추가">+</a>
     </main>
   </div>
 
-  
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
@@ -48,17 +87,16 @@
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
 
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
 
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
@@ -70,7 +108,185 @@
     </div>
   </div>
 
-  <!-- 공통 스크립트 -->
+  <!-- ===== 페이지 스크립트 ===== -->
+  <script>
+    /* ---------- 데모 데이터 (서버 연동 시 대체) ---------- */
+    // type: holiday | exam | event | personal
+    const EVENTS = [
+      { id: 1,  title: '전국연합(1,2) 수능모의(3)', date: '2025-09-03', type: 'exam' },
+      { id: 2,  title: '전국연합(1,2) 수능모의(3)', date: '2025-09-03', type: 'event' },
+      { id: 3,  title: '전국연합(1,2) 수능모의(3)', date: '2025-09-03', type: 'personal' },
+      { id: 4,  title: '개인 일정 예시',            date: '2025-09-12', type: 'personal' },
+      { id: 5,  title: '개교기념일',               date: '2025-09-12', type: 'holiday' },
+      { id: 6,  title: '과학 수행 발표',            date: '2025-09-19', type: 'personal' },
+      { id: 7,  title: '체육대회',                  date: '2025-09-19', type: 'event' },
+      { id: 8,  title: '중간고사',                  date: '2025-10-01', type: 'exam' },
+    ];
+
+    const TYPE_META = {
+      holiday : { name:'휴일',       class:'red'    },
+      exam    : { name:'지필평가',   class:'yellow' },
+      event   : { name:'학교행사',   class:'green'  },
+      personal: { name:'개인일정',   class:'blue'   },
+    };
+
+    /* ---------- 유틸 ---------- */
+    const pad = n => String(n).padStart(2, '0');
+    const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+    /* ---------- 상태 ---------- */
+    let viewYear, viewMonth;          // 현재 보고있는 (YYYY, 0-11)
+    let selectedDate;                 // 'YYYY-MM-DD'
+    let showMineOnly = false;         // 탭 (전체/내수행)
+    let sortOrder = 'desc';           // desc: 최신순(가까운순), asc: 오래된순
+
+    /* ---------- DOM ---------- */
+    const calTitleMonth = document.getElementById('calMonth');
+    const calTitleYear  = document.getElementById('calYear');
+    const calGrid       = document.getElementById('calGrid');
+    const taskList      = document.getElementById('taskList');
+
+    const prevBtn = document.getElementById('prevMonth');
+    const nextBtn = document.getElementById('nextMonth');
+    const tabAll  = document.getElementById('tabAll');
+    const tabMine = document.getElementById('tabMine');
+    const sortBtn = document.getElementById('sortBtn');
+
+    /* ---------- 달력 생성 ---------- */
+    function buildCalendar(year, month){ // month: 0-11
+      // 타이틀
+      const m = new Date(year, month, 1).toLocaleString('en-US', { month:'long' });
+      calTitleMonth.textContent = m;
+      calTitleYear.textContent  = String(year);
+
+      // 그리드
+      calGrid.innerHTML = '';
+      const firstDay = new Date(year, month, 1);
+      const startIdx = firstDay.getDay(); // 0(일)~6(토)
+      const lastDate = new Date(year, month + 1, 0).getDate();
+
+      // 앞 공백
+      for (let i=0; i<startIdx; i++) {
+        const padCell = document.createElement('div');
+        padCell.className = 'pad';
+        calGrid.appendChild(padCell);
+      }
+
+      // 날짜 채우기
+      for (let d=1; d<=lastDate; d++){
+        const cell = document.createElement('button');
+        cell.className = 'day';
+        const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
+        cell.dataset.date = dateStr;
+        cell.innerHTML = `<span class="num">${d}</span><span class="dots">${renderDots(dateStr)}</span>`;
+        if (selectedDate === dateStr) cell.classList.add('active');
+        cell.addEventListener('click', () => {
+          selectedDate = dateStr;
+          document.querySelectorAll('.day.active').forEach(el => el.classList.remove('active'));
+          cell.classList.add('active');
+          renderList();
+        });
+        calGrid.appendChild(cell);
+      }
+    }
+
+    // 날짜 아래 점(종류별) 표시
+    function renderDots(dateStr){
+      const todays = EVENTS.filter(e => e.date === dateStr);
+      const kinds = new Set(todays.map(e => e.type));
+      return Array.from(kinds).map(t => `<i class="dot ${TYPE_META[t].class}"></i>`).join('');
+    }
+
+    /* ---------- 리스트 렌더 ---------- */
+    function renderList(){
+      const items = EVENTS
+        .filter(e => e.date === selectedDate)
+        .filter(e => showMineOnly ? e.type === 'personal' : true)
+        .sort((a,b) => {
+          // 날짜만 비교(동일 날짜면 입력 순)
+          return (sortOrder === 'desc')
+            ? (new Date(b.date) - new Date(a.date))
+            : (new Date(a.date) - new Date(b.date));
+        });
+
+      taskList.innerHTML = items.map(e => `
+        <li class="task-row">
+          <div class="tag ${TYPE_META[e.type].class}">${TYPE_META[e.type].name}</div>
+          <div class="title">${e.title}</div>
+          <div class="date">${e.date}</div>
+        </li>
+      `).join('') || `<li class="empty">선택한 날짜의 일정이 없어요.</li>`;
+    }
+
+    /* ---------- 초기화 ---------- */
+    (function init(){
+      const today = new Date();
+      viewYear  = today.getFullYear();
+      viewMonth = today.getMonth();
+      selectedDate = fmt(today);
+
+      buildCalendar(viewYear, viewMonth);
+      // 오늘이 이번 달이 아니면 해당 달로 이동
+      // (데모 데이터가 2025-09라면 아래 두 줄을 주석 해제해서 맞춰볼 수 있음)
+      // viewYear = 2025; viewMonth = 8;
+      // buildCalendar(viewYear, viewMonth);
+
+      // 오늘 날짜 강조가 현재 달 안에 없으면 첫째 날로 초기화
+      const firstOfView = `${viewYear}-${pad(viewMonth+1)}-01`;
+      if (selectedDate.slice(0,7) !== firstOfView.slice(0,7)){
+        selectedDate = firstOfView;
+      }
+      // 현재 선택된 셀 active 갱신
+      document.querySelectorAll('.day').forEach(btn=>{
+        if (btn.dataset.date === selectedDate) btn.classList.add('active');
+      });
+
+      renderList();
+    })();
+
+    /* ---------- 이벤트 바인딩 ---------- */
+    prevBtn.addEventListener('click', () => {
+      if (viewMonth === 0){ viewMonth = 11; viewYear--; } else { viewMonth--; }
+      buildCalendar(viewYear, viewMonth);
+      // 달 바뀌면 선택을 1일로 이동
+      selectedDate = `${viewYear}-${pad(viewMonth+1)}-01`;
+      document.querySelector(`.day[data-date="${selectedDate}"]`)?.classList.add('active');
+      renderList();
+    });
+    nextBtn.addEventListener('click', () => {
+      if (viewMonth === 11){ viewMonth = 0; viewYear++; } else { viewMonth++; }
+      buildCalendar(viewYear, viewMonth);
+      selectedDate = `${viewYear}-${pad(viewMonth+1)}-01`;
+      document.querySelector(`.day[data-date="${selectedDate}"]`)?.classList.add('active');
+      renderList();
+    });
+
+    tabAll.addEventListener('click', () => {
+      showMineOnly = false;
+      tabAll.classList.add('active');  tabAll.setAttribute('aria-pressed','true');
+      tabMine.classList.remove('active'); tabMine.setAttribute('aria-pressed','false');
+      renderList();
+    });
+    tabMine.addEventListener('click', () => {
+      showMineOnly = true;
+      tabMine.classList.add('active'); tabMine.setAttribute('aria-pressed','true');
+      tabAll.classList.remove('active'); tabAll.setAttribute('aria-pressed','false');
+      renderList();
+    });
+
+    sortBtn.addEventListener('click', () => {
+      sortOrder = (sortOrder === 'desc') ? 'asc' : 'desc';
+      sortBtn.dataset.order = sortOrder;
+      sortBtn.setAttribute('aria-pressed', sortOrder === 'asc' ? 'true' : 'false');
+      // 아이콘 토글
+      sortBtn.querySelector('.chev').src =
+        (sortOrder === 'desc') ? '/assets/images/up.svg' : '/assets/images/down.svg';
+      sortBtn.firstChild.nodeValue = (sortOrder === 'desc') ? '최신순 ' : '오래된순 ';
+      renderList();
+    });
+  </script>
+
+  <!-- 공통 JS -->
   <script defer src="/assets/js/main.js"></script>
 </body>
 </html>

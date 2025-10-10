@@ -1,75 +1,259 @@
-<!-- class/add_hw.html 페이지 -->
+<!-- pages/class/add_hw.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class/option</title>
+  <title>수행평가 추가</title>
 
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- 페이지 전용 -->
   <link rel="stylesheet" href="/assets/css/add_hw.css">
 </head>
 
-<!-- 현재 위치 표시: tasks(수행평가) -->
 <body class="main-body" data-active="tasks">
   <div class="app">
-    
-    <!-- 헤더 -->
+    <!-- ===== 헤더 ===== -->
     <header class="app-header">
-        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
-            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
-          </button>
-    
-          <p class="title">수행평가 추가</p>
-
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+      <p class="title">수행평가 추가</p>
       <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
-    
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>class/add_hw 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+    <!-- ===== 본문 ===== -->
+    <main class="container hw-form">
+      <!-- 제목 -->
+      <input type="text" class="input title-input" placeholder="제목을 입력해주세요.">
 
+      <!-- 날짜 유형 -->
+      <section class="form-group">
+        <h3 class="label">날짜 유형</h3>
+        <div class="radio-col">
+          <label class="radio">
+            <input type="radio" name="dateType" value="single">
+            <span>단일 날짜</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="dateType" value="range" checked>
+            <span>기간 선택</span>
+          </label>
+        </div>
+
+        <!-- 날짜 입력 -->
+        <div class="date-wrap">
+          <div class="date-row single hidden">
+            <input type="date" class="date-field">
+            <span class="suffix">일자</span>
+          </div>
+
+          <div class="date-row range">
+            <input type="date" class="date-field" value="2025-10-01">
+            <span class="suffix">부터</span>
+          </div>
+          <div class="date-row range">
+            <input type="date" class="date-field" value="2025-10-05">
+            <span class="suffix">까지</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 링크 -->
+      <input type="text" class="input link-input" placeholder="연결 링크를 입력해주세요.">
+
+      <!-- 요일 선택 -->
+      <section class="form-group">
+        <h3 class="label">요일 선택</h3>
+
+        <div class="weekday-head">
+          <span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span><span>일</span>
+        </div>
+
+        <div class="weekday-pills" id="weekdayPills" aria-label="요일 선택">
+          <button type="button" class="pill" data-day="mon"></button>
+          <button type="button" class="pill" data-day="tue"></button>
+          <button type="button" class="pill" data-day="wed"></button>
+          <button type="button" class="pill" data-day="thu"></button>
+          <button type="button" class="pill" data-day="fri"></button>
+          <button type="button" class="pill" data-day="sat"></button>
+          <button type="button" class="pill" data-day="sun"></button>
+        </div>
+      </section>
+
+      <!-- 선택 박스들 -->
+      <section class="grid-2">
+        <div class="select-acc">
+          <button class="acc-head" type="button" aria-expanded="false">
+            학년 선택
+            <img src="../../assets/images/up.svg" class="chev" alt="">
+          </button>
+          <ul class="acc-body" hidden>
+            <li data-val="1학년">1학년</li>
+            <li data-val="2학년">2학년</li>
+            <li data-val="3학년">3학년</li>
+          </ul>
+        </div>
+
+        <div class="select-acc">
+          <button class="acc-head" type="button" aria-expanded="false">
+            반 선택
+            <img src="../../assets/images/up.svg" class="chev" alt="">
+          </button>
+          <ul class="acc-body" hidden>
+            <li data-val="1반">1반</li>
+            <li data-val="2반">2반</li>
+            <li data-val="3반">3반</li>
+            <li data-val="4반">4반</li>
+          </ul>
+        </div>
+
+        <div class="select-acc">
+          <button class="acc-head" type="button" aria-expanded="false">
+            교시 선택
+            <img src="../../assets/images/up.svg" class="chev" alt="">
+          </button>
+          <ul class="acc-body" hidden>
+            <li data-val="1교시">1교시</li>
+            <li data-val="2교시">2교시</li>
+            <li data-val="3교시">3교시</li>
+            <li data-val="4교시">4교시</li>
+            <li data-val="5교시">5교시</li>
+            <li data-val="6교시">6교시</li>
+            <li data-val="7교시">7교시</li>
+          </ul>
+        </div>
+
+        <div class="select-acc">
+          <button class="acc-head" type="button" aria-expanded="false">
+            과목 선택
+            <img src="../../assets/images/up.svg" class="chev" alt="">
+          </button>
+          <ul class="acc-body" hidden>
+            <li data-val="국어">국어</li>
+            <li data-val="수학">수학</li>
+            <li data-val="영어">영어</li>
+            <li data-val="과학">과학</li>
+            <li data-val="사회">사회</li>
+            <li data-val="정보">정보</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 알림 유무 -->
+      <section class="form-group">
+        <h3 class="label">알림 유무</h3>
+        <div class="radio-col">
+          <label class="radio">
+            <input type="radio" name="visibility" value="course">
+            <span>과목 수강생에게만 공개</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="visibility" value="public" checked>
+            <span>전체 공개</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- 선생님 코드 -->
+      <input type="text" class="input code-input" placeholder="선생님 코드를 입력해주세요">
+
+      <!-- 작성 완료 -->
+      <button class="submit-btn">
+        <img src="../../assets/images/send.svg" alt="">
+        작성 완료
+      </button>
     </main>
   </div>
 
-  
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
-
     <div class="menu-logo">
       <img src="/assets/images/logo_app.svg" alt="고등어" />
     </div>
-
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
-
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
-
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
       <a href="/pages/mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
     </nav>
-
     <div class="menu-auth">
       <a href="/pages/login.html">로그인</a> | <a href="/pages/signup.html">회원가입</a>
     </div>
   </div>
+
+  <!-- ===== 페이지 스크립트 ===== -->
+  <script>
+    // 날짜 유형 토글
+    const radios = document.querySelectorAll("input[name='dateType']");
+    const singleRow = document.querySelector(".date-row.single");
+    const rangeRows = document.querySelectorAll(".date-row.range");
+    radios.forEach(r => {
+      r.addEventListener('change', () => {
+        if (r.value === 'single' && r.checked){
+          singleRow.classList.remove('hidden');
+          rangeRows.forEach(el => el.classList.add('hidden'));
+        } else if (r.value === 'range' && r.checked){
+          singleRow.classList.add('hidden');
+          rangeRows.forEach(el => el.classList.remove('hidden'));
+        }
+      });
+    });
+
+    // 요일 토글
+    document.getElementById('weekdayPills').addEventListener('click', (e) => {
+      const pill = e.target.closest('.pill');
+      if (!pill) return;
+      pill.classList.toggle('on');
+    });
+
+    // 아코디언 열고/닫고 + 항목 선택 표시
+    document.querySelectorAll('.select-acc').forEach(acc => {
+      const head = acc.querySelector('.acc-head');
+      const body = acc.querySelector('.acc-body');
+
+      head.addEventListener('click', () => {
+        const open = !body.hasAttribute('hidden');
+        if (open) {
+          body.setAttribute('hidden', '');
+          head.setAttribute('aria-expanded','false');
+          head.querySelector('.chev').src = "../../assets/images/down.svg";
+        } else {
+          body.removeAttribute('hidden');
+          head.setAttribute('aria-expanded','true');
+          head.querySelector('.chev').src = "../../assets/images/up.svg";
+        }
+      });
+
+      body.addEventListener('click', (e) => {
+        const li = e.target.closest('li[data-val]');
+        if (!li) return;
+
+        // 선택 표시(색 유지)
+        body.querySelectorAll('li').forEach(x => x.classList.remove('active'));
+        li.classList.add('active');
+
+        // 헤드 라벨 교체
+        head.childNodes[0].nodeValue = li.dataset.val + ' ';
+        body.setAttribute('hidden','');
+        head.setAttribute('aria-expanded','false');
+        head.querySelector('.chev').src = "../../assets/images/down.svg";
+      });
+    });
+  </script>
 
   <!-- 공통 스크립트 -->
   <script defer src="/assets/js/main.js"></script>
