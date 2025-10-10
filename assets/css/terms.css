@@ -1,22 +1,4 @@
 /* 이용약관 페이지 전용 */
-
-/* 헤더 */
-.app-header {
-    height: var(--header-h);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .back-btn {
-    background: transparent;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-  }
-  .back-btn img {
-    width: 24px;
-    height: 24px;
-  }
   
   /* 제목 */
   .page-title {

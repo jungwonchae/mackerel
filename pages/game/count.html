@@ -1,43 +1,87 @@
+<!-- pages/game/count.html : 카운트다운 (공통 오버레이 + 버튼 아코디언 적용) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>카운트다운</title>
+
+  <!-- 공통/페이지 스타일 -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../../assets/css/count.css">
 </head>
-<body class="main-body">
-    <div class="app">
-       <!-- 헤더 -->
-        <header class="app-header">
-            <div class="brand">
-            <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
-            </div>
-            <img src="../../assets/images/menu.svg" alt="햄버거바" id="menuBtn" style="cursor:pointer;" />
-        </header>
-  
-      <main class="count-container">
-        <div class="text-top">포인트를 얻기 위해</div>
-        <div class="text-main">다르게 적힌 글자를<br>찾아보세요</div>
-        <div class="circle" id="count">3</div>
-      </main>
+
+<body class="main-body" data-active="">
+  <div class="app">
+    <!-- ===== 공통 헤더 ===== -->
+    <header class="app-header">
+      <div class="brand">
+        <a href="../index.html">
+          <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        </a>
+      </div>
+
+      <!-- 메뉴 버튼: main.js가 e.preventDefault() 후 오버레이 열어줌 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바" />
+      </a>
+    </header>
+
+    <!-- ===== 본문 ===== -->
+    <main class="count-container">
+      <div class="text-top">포인트를 얻기 위해</div>
+      <div class="text-main">다르게 적힌 글자를<br>찾아보세요</div>
+      <div class="circle" id="count">3</div>
+    </main>
+  </div>
+
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
     </div>
-  
-    <script>
-        // 메뉴 버튼 이동
-        document.getElementById('menuBtn').addEventListener('click', () => {
-        window.location.href = '../list.html';
-        });
-        let count = 3;
-        const el = document.getElementById('count');
-        const timer = setInterval(() => {
-            count--;
-            el.textContent = count;
-            if (count === 0) {
-            clearInterval(timer);
-            window.location.href = "game_lv1.html";
-            }
-        }, 1000);
-    </script>
-  </body>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== 페이지 전용 스크립트(카운트다운) ===== -->
+  <script>
+    let count = 3;
+    const el = document.getElementById('count');
+    const timer = setInterval(() => {
+      count--;
+      el.textContent = count;
+      if (count === 0) {
+        clearInterval(timer);
+        window.location.href = "game_lv1.html";
+      }
+    }, 1000);
+  </script>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
+</body>
 </html>

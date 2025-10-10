@@ -1,28 +1,3 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
-/* ===== 공통 레이아웃 (기존 규격과 동일) ===== */
-.main-body{
-  background:#FFFFFF;
-  margin:0;
-  font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
-             'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  color:#111;
-}
-.app{
-  max-width:520px;
-  margin:16px auto 24px;
-  background:#fff;
-  border-radius:14px;
-  padding:18px;
-}
-/* Header (공통) */
-.app-header{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:6px 4px 14px;
-}
-.app-header .brand img{ width:38px; height:auto; }
-.menu-btn{ width:24px; height:24px; }
-
 /* ===== 본문 ===== */
 .certify-wrap{
   display:flex;
@@ -30,6 +5,11 @@
   align-items:center;
   text-align:center;
   padding:8px 6px 24px;
+}
+
+.certify-wrap{
+  min-height: 70dvh;                     /* 화면 높이만큼 차지 */
+  justify-content: center;                /* 세로 가운데 정렬 */
 }
 
 .eyebrow{
@@ -69,6 +49,16 @@
 }
 .primary:active{ transform: translateY(1px); }
 .primary:hover{ opacity:.95; }
+
+a.primary{
+  text-decoration: none;  /* 밑줄 제거 */
+  display: block;         /* 버튼처럼 전체 클릭 영역 */
+}
+a.primary:hover,
+a.primary:active,
+a.primary:visited{
+  text-decoration: none;  /* 어떤 상태에서도 밑줄 X */
+}
 
 /* tiny */
 @media (max-width:360px){

@@ -4,46 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 인증 완료</title>
-  <link rel="stylesheet" href="../../assets/css/certify_task.css" />
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <!-- 페이지 전용 -->
+  <link rel="stylesheet" href="../../assets/css/result.css" />
 </head>
 <body class="main-body">
   <div class="app">
-    <!-- 헤더 -->
-    <header class="app-header">
-      <div class="brand">
-        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
-      </div>
-      <img
-        src="../../assets/images/menu.svg"
-        alt="햄버거바"
-        id="menuBtn"
-        class="menu-btn"
-        style="cursor:pointer;"
-        onclick="location.href='../list.html'"
-      />
-    </header>
-
     <!-- 본문 -->
-    <main class="certify-wrap">
-      <p class="eyebrow">등교 인증 완료!</p>
-      <h1 class="title">
+    <main class="result-wrap">
+      <p class="result-eyebrow">등교 인증 완료!</p>
+      <h1 class="result-title">
         100포인트를<br/>
         획득했어요!
       </h1>
-
-      <!-- 일러스트(예시) -->
-      <img src="../../assets/images/certify_check.svg" alt="" class="hero-illust" />
-
+    
+      <!-- 일러스트 -->
+      <img src="../../assets/images/certify_check.svg" alt="" class="result-illust" />
+    
       <!-- CTA -->
-      <button class="primary" id="goCert">돌아가기</button>
-    </main>
+      <a href="../ranking/ranking_point.html" class="result-btn">돌아가기</a>
+    </main>    
   </div>
-
-  <script>
-    // CTA 클릭 시 다음 단계로 이동 (필요 시 파일명 바꿔줘)
-    document.getElementById('goCert').addEventListener('click', () => {
-        location.href = '../ranking/ranking.html';
-    });
-  </script>
 </body>
 </html>

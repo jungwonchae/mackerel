@@ -1,21 +1,4 @@
 /* 내 계정 페이지 전용 (공통 토큰은 style.css 사용) */
-
-/* 헤더 정렬 - 좌:뒤로가기, 가운데 로고, 우:메뉴 */
-.app-header{
-    height: var(--header-h);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .back-btn{
-    justify-self: start;
-    background: transparent; 
-    border: 0; 
-    padding: 6px; 
-    cursor: pointer;
-    color: var(--color-text);
-  }
-  .app-header .brand{ justify-self: center; }
-  .app-header .brand img{ height: 28px; }
-  #menuBtn{ justify-self: end; }
   
   /* 상단 텍스트/배지 */
   .account-head{

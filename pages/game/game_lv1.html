@@ -1,20 +1,33 @@
+<!-- pages/game/game_lv1.html : 다른 글자 찾기 (Lv.1) - 공통 오버레이 적용 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>고등어 – 다른 글자 찾기 (Lv.1)</title>
-<link rel="stylesheet" href="../../assets/css/game_lv1.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 다른 글자 찾기 (Lv.1)</title>
+
+  <!-- 공통/페이지 스타일 -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/game_lv1.css" />
 </head>
-<body class="main-body">
+
+<body class="main-body" data-active="">
   <div class="app">
-    <!-- 헤더 -->
+    <!-- ===== 공통 헤더 ===== -->
     <header class="app-header">
-      <div class="brand"><img src="../../assets/images/logo_app.svg" alt="고등어 로고"></div>
-      <img class="menu" src="../../assets/images/menu.svg" alt="햄버거바" onclick="location.href='../list.html'">
+      <div class="brand">
+        <a href="../index.html">
+          <img src="../../assets/images/logo_app.svg" alt="고등어 로고">
+        </a>
+      </div>
+
+      <!-- 메뉴 버튼: main.js가 오버레이 열어줌 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img class="menu" src="../../assets/images/menu.svg" alt="햄버거바">
+      </a>
     </header>
 
-    <!-- 진행 바 -->
+    <!-- ===== 진행 바 ===== -->
     <div class="progress-wrap" aria-label="남은 시간">
       <div class="progress-fill" id="bar"></div>
     </div>
@@ -22,9 +35,7 @@
     <h1 class="title">다른 글자 찾기</h1>
 
     <!-- 카드 그리드 -->
-    <div class="grid" id="grid">
-      <!-- JS가 아이템 채웁니다 -->
-    </div>
+    <div class="grid" id="grid"><!-- JS가 아이템 채웁니다 --></div>
 
     <!-- 버튼 영역 -->
     <div class="btn-area" id="buttons">
@@ -33,7 +44,40 @@
     </div>
   </div>
 
-    <script>
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== 페이지 전용 스크립트 ===== -->
+  <script>
     /* ====== 설정 ====== */
     const TOTAL_TIME_MS = 15000;  // 전체 제한시간(예: 15초)
     const WORD = "바른\n말고\n운말";      // 예시 텍스트 (개행으로 줄바꿈)
@@ -50,99 +94,102 @@
 
     /* ====== 진행바 타이머 ====== */
     function startTimer(){
-    startTs = performance.now();
-    timerId = requestAnimationFrame(tick);
+      startTs = performance.now();
+      timerId = requestAnimationFrame(tick);
     }
     function tick(now){
-    const elapsed = now - startTs;
-    const remain = Math.max(0, TOTAL_TIME_MS - elapsed);
-    const pct = (remain / TOTAL_TIME_MS) * 100;
-    bar.style.width = pct + '%';
-    if (remain > 0 && !answered){
+      const elapsed = now - startTs;
+      const remain = Math.max(0, TOTAL_TIME_MS - elapsed);
+      const pct = (remain / TOTAL_TIME_MS) * 100;
+      bar.style.width = pct + '%';
+      if (remain > 0 && !answered){
         requestAnimationFrame(tick);
-    } else if (!answered){
+      } else if (!answered){
         // 시간 끝: 자동으로 오답 처리처럼 힌트만 보여주고 포인트 받기
         revealCorrectHint();
         toPointMode();
-    }
+      }
     }
 
     /* ====== 카드 생성 ====== */
     function makeCard(text, idx){
-    const el = document.createElement('div');
-    el.className = 'card';
-    el.innerText = text;
-    el.setAttribute('role','button');
-    el.setAttribute('tabindex','0');
-    el.addEventListener('click', ()=> onPick(idx, el));
-    return el;
+      const el = document.createElement('div');
+      el.className = 'card';
+      el.innerText = text;
+      el.setAttribute('role','button');
+      el.setAttribute('tabindex','0');
+      el.addEventListener('click', ()=> onPick(idx, el));
+      return el;
     }
 
     function buildGrid(){
-    grid.innerHTML = '';
-    for (let i=0;i<GRID_COUNT;i++){
+      grid.innerHTML = '';
+      for (let i=0;i<GRID_COUNT;i++){
         const t = (i===correctIndex) ? ODD : WORD;
         grid.appendChild(makeCard(t, i));
-    }
+      }
     }
 
     /* ====== 선택 로직 ====== */
     function onPick(idx, el){
-        if (answered) return;
-        // 선택 표시
-        document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-        el.classList.add('selected');
+      if (answered) return;
+      // 선택 표시
+      document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+      el.classList.add('selected');
 
-        answered = true;
-        if (idx === correctIndex) {
-            // 정답
-            el.classList.add('correct');
-            toNextMode();
-        } else {
-            // 오답 표시 (선택한 카드에 X 표시)
-            el.classList.add('wrong');
+      answered = true;
+      if (idx === correctIndex) {
+        // 정답
+        el.classList.add('correct');
+        toNextMode();
+      } else {
+        // 오답 표시 (선택한 카드에 X 표시)
+        el.classList.add('wrong');
 
-            // 정답 힌트 표시(30% 파랑)
-            revealCorrectHint();
-            toPointMode();
-        }
-        // 타이머 정지(남은 시간과 무관)
-        cancelAnimationFrame(timerId);
+        // 정답 힌트 표시(30% 파랑)
+        revealCorrectHint();
+        toPointMode();
+      }
+      // 타이머 정지
+      cancelAnimationFrame(timerId);
     }
 
     /* 정답 카드에 힌트(30% 파랑) 표시 */
     function revealCorrectHint(){
-        const cards = document.querySelectorAll('.card');
-        cards[correctIndex].classList.add('hint');
+      const cards = document.querySelectorAll('.card');
+      cards[correctIndex].classList.add('hint');
     }
 
     /* ====== 버튼 상태 변경 ====== */
     function toNextMode(){
-    // 기본 버튼을 '다음 단계'로 변경 + 아래 보조 '그만하기' 추가
-    primaryBtn.textContent = '다음 단계';
-    primaryBtn.onclick = () => location.href = 'game_lv2.html'; // 다음 단계 페이지로 연결(원하시는 경로로 교체)
-    // 그만하기 세컨더리 추가(없을 때만)
-    if (!document.getElementById('stopBtn')){
+      // 기본 버튼을 '다음 단계'로 변경 + 아래 보조 '그만하기' 추가
+      primaryBtn.textContent = '다음 단계';
+      primaryBtn.onclick = () => location.href = 'game_lv2.html';
+      if (!document.getElementById('stopBtn')){
         const stop = document.createElement('button');
         stop.id = 'stopBtn';
         stop.className = 'btn-secondary';
         stop.textContent = '그만하기';
-        stop.onclick = () => history.back(); // or 원하는 동작
+        stop.onclick = () => location.href = '../ranking/ranking_point.html';
         buttons.appendChild(stop);
-    }
+      }
     }
 
     function toPointMode(){
-        primaryBtn.textContent = '포인트 받기';
-        primaryBtn.onclick = () => location.href = 'result.html'; // 포인트 받기 페이지로 연결(경로 조정 가능)
+      primaryBtn.textContent = '포인트 받기';
+      primaryBtn.onclick = () => location.href = 'result.html';
     }
 
     /* 초기 그만하기 동작 */
-    primaryBtn.onclick = () => history.back();
+    primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
+
 
     /* 시작 */
     buildGrid();
     startTimer();
-    </script>
+  </script>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>

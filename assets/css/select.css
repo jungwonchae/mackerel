@@ -1,10 +1,4 @@
 /* select page 전용 */
-.app-header{
-    height: var(--header-h);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .back-btn{ background:transparent; border:0; padding:6px; cursor:pointer; }
-  .back-btn img{ width:24px; height:24px; }
   
   .sec{ margin-top: 24px; }
   .sec-title{ font-size:20px; font-weight:600; margin:0 0 12px 0; }
