@@ -141,6 +141,24 @@ section { margin-top: var(--space-8); }
   font-weight: 500;
 }
 
+.board-des {
+  text-align: center;   /* 가운데 정렬 */
+  margin: 20px 0;       /* 위아래 여백 */
+}
+
+.board-des .board-title {
+  font-size: 1rem;    /* 제목 크게 */
+  font-weight: 700;     /* 굵게 */
+  margin: 0;            /* 위아래 기본 여백 제거 */
+}
+
+.board-des .board-sub {
+  font-size: 0.8rem;      /* 작은 글씨 */
+  color: #888;          /* 회색 */
+  margin: 4px 0 0;      /* 위쪽만 약간 간격 */
+}
+
+
 /* ================================
    Global Menu Overlay (공통)
    - body.menu-open 일 때만 표시
