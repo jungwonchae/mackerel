@@ -1,23 +1,33 @@
+<!-- pages/game/game_lv3.html : 다른 글자 찾기 (Lv.3) - 공통 오버레이 적용 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>고등어 – 다른 글자 찾기 (Lv.3)</title>
-<link rel="stylesheet" href="../../assets/css/game_lv3.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 다른 글자 찾기 (Lv.3)</title>
+
+  <!-- 공통/페이지 스타일 -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/game_lv3.css" />
 </head>
 
-<body class="main-body">
+<body class="main-body" data-active="">
   <div class="app">
-    <!-- 헤더 -->
+    <!-- ===== 공통 헤더 ===== -->
     <header class="app-header">
       <div class="brand">
-        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        <a href="../index.html">
+          <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        </a>
       </div>
-      <img class="menu" src="../../assets/images/menu.svg" alt="햄버거바" onclick="location.href='../list.html'"/>
+
+      <!-- 메뉴 버튼: main.js가 오버레이 열어줌 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
 
-    <!-- 진행바 -->
+    <!-- ===== 진행바 ===== -->
     <div class="progress-wrap" aria-label="남은 시간">
       <div class="progress-fill" id="bar"></div>
     </div>
@@ -34,82 +44,126 @@
     </div>
   </div>
 
-<script>
-(() => {
-  const GRID_SIZE = 5;
-  const DURATION_MS = 12000;
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
-  const grid = document.getElementById('grid');
-  const bar  = document.getElementById('bar');
-  const primaryBtn = document.getElementById('primaryBtn');
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
 
-  const baseTxt = '바른\n말고\n운말';
-  const oddTxt  = '바른\n맑고\n운말';
-  const totalCards = GRID_SIZE * GRID_SIZE;
-  const answerIndex = Math.floor(Math.random() * totalCards);
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
 
-  let finished = false;
-  let timerId = null;
-  let startTs = Date.now();
+      <!-- 게시판 아코디언 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
 
-  // 카드 생성
-  for (let i = 0; i < totalCards; i++) {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.dataset.index = i;
-    div.textContent = (i === answerIndex) ? oddTxt : baseTxt;
-    div.addEventListener('click', onPick);
-    grid.appendChild(div);
-  }
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
 
-  // 타이머 진행바
-  function tick() {
-    const elapsed = Date.now() - startTs;
-    const remain  = Math.max(0, DURATION_MS - elapsed);
-    const ratio   = remain / DURATION_MS;
-    bar.style.width = (ratio * 100).toFixed(2) + '%';
-    if (remain <= 0) {
-      clearInterval(timerId);
-      if (!finished) showResult(false);
-    }
-  }
-  timerId = setInterval(tick, 100);
-  tick();
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
 
-  function onPick(e) {
-    if (finished) return;
-    const card = e.currentTarget;
-    const idx  = Number(card.dataset.index);
+  <!-- ===== 페이지 전용 스크립트 (네 로직 그대로) ===== -->
+  <script>
+    (function () {
+      const GRID_SIZE = 5;
+      const DURATION_MS = 12000;
+  
+      const grid = document.getElementById('grid');
+      const bar  = document.getElementById('bar');
+      const primaryBtn = document.getElementById('primaryBtn');
+  
+      // 줄바꿈 표시용 문자열 (카드에 white-space: pre-line; 필요)
+      const baseTxt = '바른\n말고\n운말';
+      const oddTxt  = '바른\n맑고\n운말';
+  
+      const totalCards = GRID_SIZE * GRID_SIZE;
+      const answerIndex = Math.floor(Math.random() * totalCards);
+  
+      let finished = false;
+      let timerId = null;
+      let startTs = Date.now();
+  
+      // 카드 생성
+      for (let i = 0; i < totalCards; i++) {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.dataset.index = i;
+        div.textContent = (i === answerIndex) ? oddTxt : baseTxt;
+        div.addEventListener('click', onPick);
+        grid.appendChild(div);
+      }
+  
+      // 타이머 진행바
+      function tick() {
+        const elapsed = Date.now() - startTs;
+        const remain  = Math.max(0, DURATION_MS - elapsed);
+        const ratio   = remain / DURATION_MS;
+        bar.style.width = (ratio * 100).toFixed(2) + '%';
+        if (remain <= 0) {
+          clearInterval(timerId);
+          if (!finished) showResult(false);
+        }
+      }
+      timerId = setInterval(tick, 100);
+      tick();
+  
+      function onPick(e) {
+        if (finished) return;
+        const card = e.currentTarget;
+        const idx  = Number(card.dataset.index);
+  
+        if (idx === answerIndex) {
+          card.classList.add('correct');
+          endGame(true);
+        } else {
+          card.classList.add('selected','wrong');
+          const answerCard = grid.querySelector('.card[data-index="' + answerIndex + '"]');
+          if (answerCard) answerCard.classList.add('hint');
+          endGame(false);
+        }
+      }
+  
+      function endGame(isCorrect) {
+        finished = true;
+        clearInterval(timerId);
+        grid.querySelectorAll('.card').forEach(c => c.style.pointerEvents = 'none');
+        primaryBtn.textContent = '포인트 받기';
+        primaryBtn.dataset.action = 'claim';
+      }
+  
+      function showResult() {
+        const answerCard = grid.querySelector('.card[data-index="' + answerIndex + '"]');
+        if (answerCard) answerCard.classList.add('hint');
+        endGame(false);
+      }
+  
+      // 버튼 클릭 시 이동 처리
+      primaryBtn.addEventListener('click', () => {
+        const action = primaryBtn.dataset.action;
+        if (action === 'claim') {
+          location.href = 'result.html';
+        } else {
+          location.href = '../ranking/ranking_point.html';
+        }
+      });
+    })();
+    </script>
 
-    if (idx === answerIndex) {
-      card.classList.add('correct');
-      endGame(true);
-    } else {
-      card.classList.add('selected','wrong');
-      const answerCard = grid.querySelector(`.card[data-index="${answerIndex}"]`);
-      answerCard.classList.add('hint');
-      endGame(false);
-    }
-  }
-
-  function endGame(isCorrect) {
-    finished = true;
-    clearInterval(timerId);
-    grid.querySelectorAll('.card').forEach(c => c.style.pointerEvents = 'none');
-    primaryBtn.textContent = '포인트 받기';
-    primaryBtn.dataset.action = 'claim';
-  }
-
-  // 버튼 클릭 시 이동 처리
-  primaryBtn.addEventListener('click', () => {
-    const action = primaryBtn.dataset.action;
-    if (action === 'claim') {
-      location.href = 'result.html';
-    } else {
-      history.back();
-    }
-  });
-})();
-</script>
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>

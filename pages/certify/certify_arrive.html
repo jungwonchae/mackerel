@@ -4,47 +4,85 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 등교 인증</title>
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <!-- 페이지 전용 -->
   <link rel="stylesheet" href="../../assets/css/certify_task.css" />
 </head>
-<body class="main-body">
+
+<!-- 현재 위치 표시: ranking -->
+<body class="main-body" data-active="ranking">
   <div class="app">
-    <!-- 헤더 -->
+
+    <!-- ===== 공통 헤더 (뒤로가기 + 메뉴) ===== -->
     <header class="app-header">
-      <div class="brand">
-        <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
-      </div>
-      <img
-        src="../../assets/images/menu.svg"
-        alt="햄버거바"
-        id="menuBtn"
-        class="menu-btn"
-        style="cursor:pointer;"
-        onclick="location.href='../list.html'"
-      />
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기" />
+      </button>
+
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
 
-    <!-- 본문 -->
-    <main class="certify-wrap">
+    <!-- ===== 본문 ===== -->
+    <main class="certify-wrap container">
       <p class="eyebrow">포인트를 얻기 위해</p>
       <h1 class="title">
         등교 인증을<br/>
         해보세요
       </h1>
 
-      <!-- 일러스트(예시) -->
+      <!-- 일러스트 -->
       <img src="../../assets/images/certify_map.svg" alt="" class="hero-illust" />
 
       <!-- CTA -->
-      <button class="primary" id="goCert">내 위치 인증하기</button>
+      <button class="primary" id="goCert" type="button">내 위치 인증하기</button>
     </main>
   </div>
 
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== 페이지 스크립트 ===== -->
   <script>
-    // CTA 클릭 시 다음 단계로 이동 (필요 시 파일명 바꿔줘)
     document.getElementById('goCert').addEventListener('click', () => {
-        alert('위치, 시간 연동이 필요합니다.(연동 예정)');
-        location.href = './result.html';
+      alert('위치, 시간 연동이 필요합니다.(연동 예정)');
+      location.href = './result.html';
     });
   </script>
+
+  <!-- ===== 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 ===== -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>

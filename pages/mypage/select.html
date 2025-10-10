@@ -5,39 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 업적/아이콘 선택</title>
 
+  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <!-- 페이지 전용 스타일 -->
   <link rel="stylesheet" href="../../assets/css/select.css">
 </head>
-<body class="main-body">
+
+<!-- 현재 위치: 마이페이지 -->
+<body class="main-body" data-active="mypage">
   <div class="app">
 
-    <!-- 헤더 -->
+    <!-- 헤더 (공통 포맷: 뒤로가기 + 메뉴 오버레이 버튼) -->
     <header class="app-header">
       <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
         <img src="../../assets/images/left.svg" alt="뒤로가기"/>
       </button>
-      <img src="../../assets/images/menu.svg" alt="햄버거바" id="menuBtn"
-           style="cursor:pointer;" onclick="location.href='../list.html'"/>
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바"/>
+      </a>
     </header>
 
-    <main>
-
+    <!-- 본문 -->
+    <main class="container">
       <!-- 획득 업적 -->
       <section class="sec">
         <h2 class="sec-title">획득 업적</h2>
         <div class="panel achievements" id="achievements">
-          <!-- 원하는 업적들을 버튼으로 나열 -->
-          <button class="tag t-red"   data-value="그랜드 마스터">그랜드 마스터</button>
-          <button class="tag t-pink"  data-value="마스터">마스터</button>
-          <button class="tag t-blue"  data-value="다이아">다이아</button>
-
-          <button class="tag t-teal"  data-value="플래티넘">플래티넘</button>
-          <button class="tag t-gold"  data-value="골드">골드</button>
-          <button class="tag t-silver" data-value="실버">실버</button>
-          <button class="tag t-bronze" data-value="브론즈">브론즈</button>
-
-          <button class="tag t-gray"  data-value="일반 고등어">일반 고등어</button>
-          <button class="tag t-gray"  data-value="일반 삼치">일반 삼치</button>
+          <button class="tag t-red"     data-value="그랜드 마스터">그랜드 마스터</button>
+          <button class="tag t-pink"    data-value="마스터">마스터</button>
+          <button class="tag t-blue"    data-value="다이아">다이아</button>
+          <button class="tag t-teal"    data-value="플래티넘">플래티넘</button>
+          <button class="tag t-gold"    data-value="골드">골드</button>
+          <button class="tag t-silver"  data-value="실버">실버</button>
+          <button class="tag t-bronze"  data-value="브론즈">브론즈</button>
+          <button class="tag t-gray"    data-value="일반 고등어">일반 고등어</button>
+          <button class="tag t-gray"    data-value="일반 삼치">일반 삼치</button>
         </div>
       </section>
 
@@ -45,22 +47,17 @@
       <section class="sec">
         <h2 class="sec-title">획득 아이콘</h2>
         <div class="panel icons" id="icons">
-          <!-- 카드 1 -->
           <button class="icon-card" data-src="../../assets/images/fish.svg" data-label="일반 고등어">
             <span class="thumb"><img src="../../assets/images/fish.svg" alt="일반 고등어"/></span>
             <span class="label">일반<br/>고등어</span>
           </button>
 
-          <!-- 카드 2 -->
           <button class="icon-card" data-src="../../assets/images/fish_crown.svg" data-label="왕관 고등어">
             <span class="thumb"><img src="../../assets/images/fish_crown.svg" alt="왕관 고등어"/></span>
             <span class="label">왕관<br/>고등어</span>
           </button>
-
-          <!-- 필요시 더 추가 -->
         </div>
       </section>
-
     </main>
 
     <!-- 하단 고정 버튼 -->
@@ -72,13 +69,45 @@
     </div>
   </div>
 
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="./mypage.html"           class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- 페이지 전용 스크립트 (선택 저장 로직) -->
   <script>
-    // 키 이름(다른 페이지와 공유)
+    // 키 이름
     const LS_ACHV = 'selectedAchievement';
     const LS_ICON_SRC = 'selectedProfileIconSrc';
     const LS_ICON_LABEL = 'selectedProfileIconLabel';
 
-    // 현재 저장된 값으로 초기 하이라이트
     const savedAchv = localStorage.getItem(LS_ACHV);
     const savedIcon = localStorage.getItem(LS_ICON_SRC);
 
@@ -89,11 +118,8 @@
     achvWrap.addEventListener('click', (e) => {
       const btn = e.target.closest('.tag');
       if (!btn) return;
-
-      // 활성 클래스 처리
       achvWrap.querySelectorAll('.tag.active').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
-
       currentAchv = btn.dataset.value;
     });
 
@@ -105,10 +131,8 @@
     iconsWrap.addEventListener('click', (e) => {
       const card = e.target.closest('.icon-card');
       if (!card) return;
-
       iconsWrap.querySelectorAll('.icon-card.active').forEach(el => el.classList.remove('active'));
       card.classList.add('active');
-
       currentIconSrc = card.dataset.src;
       currentIconLabel = card.dataset.label || '';
     });
@@ -130,9 +154,11 @@
         localStorage.setItem(LS_ICON_SRC, currentIconSrc);
         localStorage.setItem(LS_ICON_LABEL, currentIconLabel);
       }
-      // 적용 후 이전 페이지로
       history.back();
     });
   </script>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>

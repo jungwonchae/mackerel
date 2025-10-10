@@ -114,6 +114,28 @@ section { margin-top: var(--space-8); }
 .menu-btn{ width:50px; height:50px; cursor:pointer; user-select:none; padding:8px; margin:-8px; }
 
 
+/* ===== 뒤로가기 버튼 (공통 헤더용) ===== */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+
+  margin-right: 8px;       /* 로고/타이틀과 간격 */
+  background: transparent; /* 배경 제거 */
+  border: 0;
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent; /* 모바일 터치 하이라이트 제거 */
+}
+
+.back-btn img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
 /* ================================
    Global Menu Overlay (공통)
    - body.menu-open 일 때만 표시

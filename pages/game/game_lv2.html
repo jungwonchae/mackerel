@@ -1,20 +1,33 @@
+<!-- pages/game/game_lv2.html : 다른 글자 찾기 (Lv.2) - 공통 오버레이 적용 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>고등어 – 다른 글자 찾기 (Lv.2)</title>
-<link rel="stylesheet" href="../../assets/css/game_lv2.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고등어 – 다른 글자 찾기 (Lv.2)</title>
+
+  <!-- 공통/페이지 스타일 -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/game_lv2.css" />
 </head>
-<body class="main-body">
-  <div class="app">ㅌ
-    <!-- 헤더 -->
+
+<body class="main-body" data-active="">
+  <div class="app">
+    <!-- ===== 공통 헤더 ===== -->
     <header class="app-header">
-      <div class="brand"><img src="../../assets/images/logo_app.svg" alt="고등어 로고" /></div>
-      <img src="../../assets/images/menu.svg" alt="햄버거바" class="menu" onclick="location.href='../list.html'"/>
+      <div class="brand">
+        <a href="../index.html">
+          <img src="../../assets/images/logo_app.svg" alt="고등어 로고" />
+        </a>
+      </div>
+
+      <!-- 메뉴 버튼: main.js가 오버레이 열어줌 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
 
-    <!-- 진행바 -->
+    <!-- ===== 진행바 ===== -->
     <div class="progress-wrap" aria-label="남은 시간">
       <div class="progress-fill" id="progressFill"></div>
     </div>
@@ -32,122 +45,156 @@
     </div>
   </div>
 
-<script>
-/** ====== 설정 ====== */
-const DURATION_MS = 12000; // LV2: 더 짧은 제한시간 (12초)
-const ROWS = 4, COLS = 4;
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
-/** ====== 상태 ====== */
-let timerId = null;
-let endAt = null;
-let finished = false; // 정답/오답/시간초과 후 true
-let correctIndex = -1;
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
 
-/** ====== DOM ====== */
-const gridEl = document.getElementById('grid');
-const progressFill = document.getElementById('progressFill');
-const primaryBtn = document.getElementById('primaryBtn');
-const secondaryBtn = document.getElementById('secondaryBtn');
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
 
-/** ====== 카드 구성 (예시: 같은 텍스트, 1개만 살짝 다른 텍스트) ====== */
-const normalText = '바른\n말고\n운말';
-const oddText    = '바른\n말교\n온말'; // 한 글자 다른 예시 (취향대로 교체 가능)
+      <!-- 게시판 아코디언 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
 
-function buildGrid() {
-  gridEl.innerHTML = '';
-  const total = ROWS * COLS;
-  correctIndex = Math.floor(Math.random() * total);
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
 
-  for (let i=0; i<total; i++) {
-    const btn = document.createElement('div');
-    btn.className = 'card';
-    btn.innerText = (i === correctIndex) ? oddText : normalText;
-    btn.addEventListener('click', () => onPick(i, btn));
-    gridEl.appendChild(btn);
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== 페이지 전용 스크립트 ===== -->
+  <script>
+  /** ====== 설정 ====== */
+  const DURATION_MS = 12000; // LV2: 더 짧은 제한시간 (12초)
+  const ROWS = 4, COLS = 4;
+
+  /** ====== 상태 ====== */
+  let timerId = null;
+  let endAt = null;
+  let finished = false; // 정답/오답/시간초과 후 true
+  let correctIndex = -1;
+
+  /** ====== DOM ====== */
+  const gridEl = document.getElementById('grid');
+  const progressFill = document.getElementById('progressFill');
+  const primaryBtn = document.getElementById('primaryBtn');
+  const secondaryBtn = document.getElementById('secondaryBtn');
+
+  /** ====== 카드 구성 (예시: 같은 텍스트, 1개만 살짝 다른 텍스트) ====== */
+  const normalText = '바른\n말고\n운말';
+  const oddText    = '바른\n말교\n온말'; // 한 글자 다른 예시
+
+  function buildGrid() {
+    gridEl.innerHTML = '';
+    const total = ROWS * COLS;
+    correctIndex = Math.floor(Math.random() * total);
+
+    for (let i=0; i<total; i++) {
+      const btn = document.createElement('div');
+      btn.className = 'card';
+      btn.innerText = (i === correctIndex) ? oddText : normalText;
+      btn.addEventListener('click', () => onPick(i, btn));
+      gridEl.appendChild(btn);
+    }
   }
-}
 
-function lockGrid() {
-  gridEl.querySelectorAll('.card').forEach(c => {
-    c.style.pointerEvents = 'none';
-  });
-}
-
-/** ====== 선택 로직 ====== */
-function onPick(index, el) {
-  if (finished) return;
-  // 선택 표시
-  gridEl.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-
-  if (index === correctIndex) {
-    // 정답
-    el.classList.add('correct');
-    finished = true;
-    lockGrid();
-    stopTimer();
-    // 버튼 상태: 상단은 "다음단계", 하단에 "그만하기"
-    primaryBtn.textContent = '다음단계';
-    primaryBtn.onclick = () => location.href = 'game_lv3.html'; // 다음 단계가 있다면 수정
-    secondaryBtn.style.display = 'block';
-    secondaryBtn.onclick = () => history.back();
-  } else {
-    // 오답
-    el.classList.add('wrong');
-    finished = true;
-    lockGrid();
-    stopTimer();
-    revealCorrectHint();
-    // 버튼 상태: "포인트 받기"
-    primaryBtn.textContent = '포인트 받기';
-    primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
-    secondaryBtn.style.display = 'none';
+  function lockGrid() {
+    gridEl.querySelectorAll('.card').forEach(c => { c.style.pointerEvents = 'none'; });
   }
-}
 
-function revealCorrectHint() {
-  const cards = Array.from(gridEl.querySelectorAll('.card'));
-  const c = cards[correctIndex];
-  if (c) c.classList.add('hint');
-}
+  /** ====== 선택 로직 ====== */
+  function onPick(index, el) {
+    if (finished) return;
+    // 선택 표시
+    gridEl.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
 
-/** ====== 진행바 타이머 ====== */
-function startTimer() {
-  endAt = Date.now() + DURATION_MS;
-  tick();
-  timerId = setInterval(tick, 100);
-}
-function stopTimer() {
-  if (timerId) {
-    clearInterval(timerId);
-    timerId = null;
-  }
-}
-function tick() {
-  const remain = Math.max(0, endAt - Date.now());
-  const ratio = remain / DURATION_MS; // 1 -> 0
-  progressFill.style.width = (ratio * 100) + '%';
-
-  if (remain <= 0) {
-    stopTimer();
-    if (!finished) {
+    if (index === correctIndex) {
+      // 정답
+      el.classList.add('correct');
       finished = true;
       lockGrid();
+      stopTimer();
+      // 버튼 상태: 상단은 "다음단계", 하단에 "그만하기"
+      primaryBtn.textContent = '다음 단계';
+      primaryBtn.onclick = () => location.href = 'game_lv3.html'; // 다음 단계 경로 조정 가능
+      secondaryBtn.style.display = 'block';
+      secondaryBtn.onclick  = () => location.href = '../ranking/ranking_point.html';
+    } else {
+      // 오답
+      el.classList.add('wrong');
+      finished = true;
+      lockGrid();
+      stopTimer();
       revealCorrectHint();
-      // 시간초과: 포인트 받기 상태로
+      // 버튼 상태: "포인트 받기"
       primaryBtn.textContent = '포인트 받기';
       primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
       secondaryBtn.style.display = 'none';
     }
   }
-}
 
-/** ====== 버튼 초기동작 (그만하기) ====== */
-primaryBtn.onclick = () => history.back();
+  function revealCorrectHint() {
+    const cards = Array.from(gridEl.querySelectorAll('.card'));
+    const c = cards[correctIndex];
+    if (c) c.classList.add('hint');
+  }
 
-/** ====== 시작 ====== */
-buildGrid();
-startTimer();
-</script>
+  /** ====== 진행바 타이머 ====== */
+  function startTimer() {
+    endAt = Date.now() + DURATION_MS;
+    tick();
+    timerId = setInterval(tick, 100);
+  }
+  function stopTimer() {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+  }
+  function tick() {
+    const remain = Math.max(0, endAt - Date.now());
+    const ratio = remain / DURATION_MS; // 1 -> 0
+    progressFill.style.width = (ratio * 100) + '%';
+
+    if (remain <= 0) {
+      stopTimer();
+      if (!finished) {
+        finished = true;
+        lockGrid();
+        revealCorrectHint();
+        // 시간초과: 포인트 받기 상태로
+        primaryBtn.textContent = '포인트 받기';
+        primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
+        secondaryBtn.style.display = 'none';
+      }
+    }
+  }
+
+  /** ====== 버튼 초기동작 (그만하기) ====== */
+  primaryBtn.onclick = () => location.href = '../ranking/ranking_point.html';
+
+  /** ====== 시작 ====== */
+  buildGrid();
+  startTimer();
+  </script>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>
