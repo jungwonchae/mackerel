@@ -1,3 +1,4 @@
+<!-- pages/mypage/subject.html : 내 과목 (공통 헤더/오버레이 적용) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,22 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>고등어 – 내 과목</title>
 
+  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <!-- 페이지 전용 -->
   <link rel="stylesheet" href="../../assets/css/subject.css">
 </head>
-<body class="main-body">
+
+<!-- 현재 위치 표시: mypage -->
+<body class="main-body" data-active="mypage">
   <div class="app">
 
-    <!-- 헤더 -->
-    <header class="subject-header">
+    <!-- ===== 공통 헤더 (뒤로가기 + 메뉴 오버레이 트리거) ===== -->
+    <header class="app-header">
       <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
         <img src="../../assets/images/left.svg" alt="뒤로가기"/>
       </button>
-      <h1 class="title">내 과목</h1>
-      <img src="../../assets/images/menu.svg" alt="햄버거바" id="menuBtn"
-           style="cursor:pointer;" onclick="location.href='../list.html'"/>
+
+      <p class="title">내 과목 추가</p>
+
+      <!-- 메뉴 버튼: main.js 가 e.preventDefault() 후 오버레이 열어줌 -->
+      <a href="../list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="../../assets/images/menu.svg" alt="햄버거바"/>
+      </a>
     </header>
 
+    <!-- ===== 본문 ===== -->
     <main>
       <!-- 학년 선택 아코디언 -->
       <section class="box-select">
@@ -54,35 +64,52 @@
       <!-- 하단 고정 버튼 -->
       <div class="footer">
         <button id="submitBtn" class="primary-btn" type="button">
-        <img src="../../assets/images/send.svg" alt="보내기 아이콘" class="icon-send" />
-        작성 완료
+          <img src="../../assets/images/send.svg" alt="보내기 아이콘" class="icon-send" />
+          작성 완료
         </button>
-    </div>
+      </div>
     </main>
   </div>
 
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="../../assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="../index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+      <!-- 게시판 아코디언 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="../../assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="../board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="../board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="../board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
+
+      <a href="../ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="../class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="../mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="../login.html">로그인</a> | <a href="../signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- ===== 페이지 스크립트 ===== -->
   <script>
-    // 학년별 과목 샘플 (원하면 서버 데이터로 대체 가능)
+    // 학년별 과목 샘플
     const SUBJECTS = {
-    1: [
-        "공통국어", "공통수학", "공통영어", "통합사회", "통합과학",
-        "정보", "인공지능기초", "한국사", "과학 탐구 실험",
-        "음악", "미술", "체육"
-    ],
-    2: [
-        "문학", "화법과작문", "언어와매체", "수학1", "수학2", "대수", "미적분", "확률과 통계",
-        "영어", "지리", "사회문화", "세계사", "물리", "화학", "생명과학", "지구과학",
-        "로봇과 공학세계", "자료구조", "프로그래밍", "한문", "일본어",
-        "정치", "윤리와 사상", "음악", "미술", "체육"
-    ],
-    3: [
-        "심화국어", "영어2", "심화영어", "수학과제탐구", "영어독해와작문", "한국사",
-        "미적분", "경제수학", "인공지능수학",
-        "경제", "생활과 윤리", "세계지리", "사회문제 탐구", "비교문화",
-        "물리학Ⅱ", "생명과학Ⅱ", "지구과학Ⅱ", "화학Ⅱ",
-        "융합과학", "과학과제 연구", "과학실험", "정보과학",
-        "일본어", "미술", "체육"
-    ]
+      1: ["공통국어","공통수학","공통영어","통합사회","통합과학","정보","인공지능기초","한국사","과학 탐구 실험","음악","미술","체육"],
+      2: ["문학","화법과작문","언어와매체","수학1","수학2","대수","미적분","확률과 통계","영어","지리","사회문화","세계사","물리","화학","생명과학","지구과학","로봇과 공학세계","자료구조","프로그래밍","한문","일본어","정치","윤리와 사상","음악","미술","체육"],
+      3: ["심화국어","영어2","심화영어","수학과제탐구","영어독해와작문","한국사","미적분","경제수학","인공지능수학","경제","생활과 윤리","세계지리","사회문제 탐구","비교문화","물리학Ⅱ","생명과학Ⅱ","지구과학Ⅱ","화학Ⅱ","융합과학","과학과제 연구","과학실험","정보과학","일본어","미술","체육"]
     };
 
     const gradeHead   = document.getElementById('gradeHead');
@@ -94,9 +121,9 @@
     const subjectLabel = document.getElementById('subjectLabel');
 
     const chips = document.getElementById('chips');
-    const selected = new Set();   // 선택된 과목 집합
+    const selected = new Set();
 
-    // 유틸: 아코디언 토글
+    // 아코디언 토글 유틸
     function toggleList(headBtn, bodyEl) {
       const open = bodyEl.classList.toggle('show');
       headBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -121,7 +148,7 @@
       gradeBody.classList.remove('show');
       gradeHead.setAttribute('aria-expanded', 'false');
 
-      // 과목 목록 렌더링
+      // 과목 렌더링
       subjectBody.innerHTML = SUBJECTS[g]
         .map(name => `<li data-subject="${name}">${name}</li>`)
         .join('');
@@ -138,12 +165,12 @@
       const li = e.target.closest('li[data-subject]');
       if (!li) return;
       const name = li.dataset.subject;
-      if (selected.has(name)) return; // 중복 방지
+      if (selected.has(name)) return;
       selected.add(name);
       renderChips();
     });
 
-    // 태그 렌더링
+    // 선택된 과목 칩 렌더링
     function renderChips() {
       chips.innerHTML = [...selected]
         .map(n => `
@@ -154,7 +181,7 @@
         `).join('');
     }
 
-    // 태그 삭제
+    // 칩 삭제
     chips.addEventListener('click', (e) => {
       const btn = e.target.closest('.chip-x');
       if (!btn) return;
@@ -166,9 +193,11 @@
 
     // 제출 (데모)
     document.getElementById('submitBtn').addEventListener('click', () => {
-      // TODO: 서버에 전송하거나 로컬스토리지 저장
       alert(`선택된 과목: ${[...selected].join(', ') || '없음'}`);
     });
   </script>
+
+  <!-- 공통 JS: 메뉴 열기/닫기 + 게시판 아코디언 토글 -->
+  <script defer src="../../assets/js/main.js"></script>
 </body>
 </html>
