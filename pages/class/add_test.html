@@ -1,44 +1,84 @@
-<!-- class/add_test.html 페이지 -->
+<!-- pages/class/add_test.html : 지필평가 추가 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class/option</title>
+  <title>지필평가 추가</title>
 
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- 페이지 전용 -->
   <link rel="stylesheet" href="/assets/css/add_test.css">
 </head>
 
-<!-- 현재 위치 표시: tasks(수행평가) -->
 <body class="main-body" data-active="tasks">
   <div class="app">
-    
     <!-- 헤더 -->
     <header class="app-header">
-        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
-            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
-          </button>
-    
-          <p class="title">지필평가 추가</p>
-
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="../../assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+      <p class="title">지필평가 추가</p>
       <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
-    
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>class/add_test 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+    <!-- 본문 -->
+    <main class="container add-form">
+      <!-- 제목 -->
+      <input type="text" class="input-title" placeholder="제목을 입력해주세요." />
 
+      <!-- 날짜 유형 -->
+      <div class="form-group">
+        <label class="label">날짜 유형</label>
+        <div class="radio-group">
+          <label class="r">
+            <input type="radio" name="dateType" value="single">
+            <span>단일 날짜</span>
+          </label>
+          <label class="r">
+            <input type="radio" name="dateType" value="range" checked>
+            <span>기간 선택</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 날짜 입력 -->
+      <div class="date-inputs">
+        <!-- 단일 -->
+        <div class="date-row single-date hidden">
+          <input type="date" class="date-field">
+          <span class="suffix">일자</span>
+        </div>
+
+        <!-- 기간 -->
+        <div class="date-row range-date">
+          <input type="date" class="date-field" value="2025-10-01">
+          <span class="suffix">부터</span>
+        </div>
+        <div class="date-row range-date">
+          <input type="date" class="date-field" value="2025-10-05">
+          <span class="suffix">까지</span>
+        </div>
+      </div>
+
+      <!-- 링크 -->
+      <input type="text" class="input-line" placeholder="연결 링크를 입력해주세요." />
+
+      <!-- 선생님 코드 -->
+      <input type="text" class="input-line" placeholder="선생님 코드를 입력해주세요" />
+
+      <!-- 작성 버튼 -->
+      <button class="submit-btn" type="button">
+        <img src="../../assets/images/send.svg" alt="보내기">
+        작성 완료
+      </button>
     </main>
   </div>
 
-  
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- 공통 메뉴 오버레이 -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
@@ -49,17 +89,15 @@
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
 
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
 
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
@@ -71,7 +109,24 @@
     </div>
   </div>
 
-  <!-- 공통 스크립트 -->
+  <!-- 페이지 스크립트: 단일/기간 토글 -->
+  <script>
+    const radios = document.querySelectorAll("input[name='dateType']");
+    const singleRow = document.querySelector(".single-date");
+    const rangeRows = document.querySelectorAll(".range-date");
+
+    radios.forEach(r => {
+      r.addEventListener("change", () => {
+        if (r.value === "single" && r.checked) {
+          singleRow.classList.remove("hidden");
+          rangeRows.forEach(el => el.classList.add("hidden"));
+        } else if (r.value === "range" && r.checked) {
+          singleRow.classList.add("hidden");
+          rangeRows.forEach(el => el.classList.remove("hidden"));
+        }
+      });
+    });
+  </script>
   <script defer src="/assets/js/main.js"></script>
 </body>
 </html>
