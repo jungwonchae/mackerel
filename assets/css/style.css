@@ -136,6 +136,11 @@ section { margin-top: var(--space-8); }
   object-fit: contain;
 }
 
+.title{
+  font-size: 20px;
+  font-weight: 500;
+}
+
 /* ================================
    Global Menu Overlay (공통)
    - body.menu-open 일 때만 표시
