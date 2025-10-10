@@ -1,33 +1,77 @@
-<!-- add_hw.html 페이지 -->
+<!-- class/add_hw.html 페이지 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class 수행평가 추가</title>
-  
+  <title>class/option</title>
+
+  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/index.css">
+  <link rel="stylesheet" href="/assets/css/add_hw.css">
 </head>
 
-<body class="main-body">
+<!-- 현재 위치 표시: tasks(수행평가) -->
+<body class="main-body" data-active="tasks">
   <div class="app">
-    <!-- 헤더  -->
+    
+    <!-- 헤더 -->
     <header class="app-header">
-        <div class="brand">
-          <a href="/pages/index.html">
-            <img src="/assets/images/logo_app.svg" alt="고등어 로고" />
-          </a>
-        </div>
-      
-        <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
-          <img src="/assets/images/menu.svg" alt="햄버거바" />
-        </a>
+        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
+          </button>
+    
+          <p class="title">수행평가 추가</p>
+
+      <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
+        <img src="/assets/images/menu.svg" alt="햄버거바" />
+      </a>
     </header>
+    
 
-    <!-- 여기서 부터 시작  -->
-     <p>add_hw.html 페이지 입니다.</p>
+    <!-- 본문 - 여기서 부터 작업 -->
+    <main class="container">
+      <p>class/add_hw 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
 
-      
-  </body>
-  </html>
+    </main>
+  </div>
+
+  
+  <!-- === 여기서 부터 공통 === -->
+  <!-- === 메뉴 오버레이 === -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
+
+    <div class="menu-logo">
+      <img src="/assets/images/logo_app.svg" alt="고등어" />
+    </div>
+
+    <nav class="menu-nav">
+      <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
+
+        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+            게시판
+            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+        </button>
+        
+        <ul id="boardSub" class="submenu" hidden>
+            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+        </ul>
+
+      <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
+      <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
+      <a href="/pages/mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
+    </nav>
+
+    <div class="menu-auth">
+      <a href="/pages/login.html">로그인</a> | <a href="/pages/signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script defer src="/assets/js/main.js"></script>
+</body>
+</html>
