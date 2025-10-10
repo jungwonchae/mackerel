@@ -1,4 +1,4 @@
-<!-- class/update.html 페이지 -->
+<!-- board/update.html 페이지 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,34 +11,75 @@
   <link rel="stylesheet" href="/assets/css/update.css">
 </head>
 
-<!-- 현재 위치 표시: tasks(수행평가) -->
+<!-- 현재 위치 표시: tasks(수행평가) - 스켈레톤 유지 -->
 <body class="main-body" data-active="tasks">
   <div class="app">
-    
     <!-- 헤더 -->
     <header class="app-header">
-        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
-            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
-          </button>
-    
-          <p class="title">글 수정</p>
+      <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
+        <img src="/assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+
+      <p class="title">글 수정</p>
 
       <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
-    
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>board/update 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+    <!-- 본문 -->
+    <main class="container update-container" id="updateApp" aria-live="polite">
+      <!-- 읽기 전용 카테고리 표시 -->
+      <div class="field">
+        <label class="label">카테고리</label>
+        <div id="categoryPill" class="pill" aria-readonly="true">자유게시판</div>
+      </div>
 
+      <!-- 제목 입력 -->
+      <div class="field">
+        <label class="label">제목</label>
+        <div class="input-with-icon">
+          <input id="titleInput" type="text" placeholder="제목을 입력하세요" />
+          <svg class="ico-pencil" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82Z" fill="#9CA3AF"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 내용 입력 -->
+      <div class="field">
+        <label class="label">내용</label>
+        <div class="textarea-with-icon">
+          <textarea id="bodyInput" rows="10" placeholder="내용을 입력하세요."></textarea>
+          <svg class="ico-pencil" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82Z" fill="#9CA3AF"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 파일 첨부 -->
+      <div class="attach">
+        <label for="fileInput" class="attach-btn">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M3 6a4 4 0 0 1 4-4h7a2 2 0 0 1 1.41.59l4 4A2 2 0 0 1 20 8v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V6Z" fill="#FFB200"/>
+          </svg>
+          <span>파일 첨부</span>
+        </label>
+        <input id="fileInput" type="file" multiple hidden />
+        <ul id="fileList" class="file-list"></ul>
+      </div>
+
+      <!-- 제출 버튼 고정 -->
+      <button id="submitBtn" class="submit-btn" type="button" aria-label="수정 완료">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z" fill="#fff"/>
+        </svg>
+        수정 완료
+      </button>
     </main>
   </div>
 
-  
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- === 공통 메뉴 오버레이 === -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
@@ -49,17 +90,16 @@
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
 
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
+      <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
 
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
@@ -73,5 +113,72 @@
 
   <!-- 공통 스크립트 -->
   <script defer src="/assets/js/main.js"></script>
+
+  <!-- 페이지 전용 스크립트 -->
+  <script>
+    // ---------- 간단 스토리지 헬퍼 ----------
+    const STORAGE_KEY = id => `POST_${id}`;
+
+    // detail 페이지의 MOCK_POST와 동일한 형태를 가정
+    const FALLBACK = {
+      id: 101,
+      category: 'free',
+      school: '포항고',
+      title: '여름방학 계획',
+      body: '내용을 바꾸려고 함.',
+    };
+
+    const qs = new URLSearchParams(location.search);
+    const postId = qs.get('id') || FALLBACK.id;
+
+    // 저장된 데이터 로드 (없으면 기본값)
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY(postId));
+        if (raw) return JSON.parse(raw);
+      } catch(e){}
+      return { ...FALLBACK, id: postId };
+    }
+
+    function saveData(data) {
+      localStorage.setItem(STORAGE_KEY(postId), JSON.stringify(data));
+    }
+
+    // ---------- 초기 렌더 ----------
+    const state = loadData();
+
+    const cateName = {
+      free: '자유게시판',
+      anon: '익명게시판',
+      qna : '질문게시판'
+    }[state.category] || '자유게시판';
+
+    document.getElementById('categoryPill').textContent = cateName;
+    document.getElementById('titleInput').value = state.title || '';
+    document.getElementById('bodyInput').value  = state.body || '';
+
+    // 파일 표시
+    const fileInput = document.getElementById('fileInput');
+    const fileList  = document.getElementById('fileList');
+    fileInput.addEventListener('change', () => {
+      fileList.innerHTML = [...fileInput.files].map(f => `<li>${f.name}</li>`).join('');
+    });
+
+    // 수정 완료
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const title = document.getElementById('titleInput').value.trim();
+      const body  = document.getElementById('bodyInput').value.trim();
+
+      // 간단 유효성 검사
+      if (!title) { alert('제목을 입력하세요.'); return; }
+      if (!body)  { alert('내용을 입력하세요.'); return; }
+
+      const toSave = { ...state, title, body };
+      saveData(toSave);
+
+      // 완료 후 상세 페이지로 이동 (같은 id)
+      location.href = `/pages/board/board_detail.html?id=${encodeURIComponent(postId)}`;
+    });
+  </script>
 </body>
 </html>

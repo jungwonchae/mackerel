@@ -4,44 +4,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>class/option</title>
+  <title>board/detail</title>
 
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="stylesheet" href="/assets/css/board_detail.css">
 </head>
 
-<!-- 현재 위치 표시: tasks(수행평가) -->
-<body class="main-body" data-active="tasks">
+<!-- 현재 위치 표시: boards -->
+<body class="main-body" data-active="boards">
   <div class="app">
-    
-    <!-- 헤더 -->
+    <!-- ===== 헤더 ===== -->
     <header class="app-header">
-        <button class="back-btn" aria-label="뒤로 가기" onclick="history.back()">
-            <img src="../../assets/images/left.svg" alt="뒤로가기"/>
-          </button>
-    
-          <div class="board-des">
-            <p class="board-title">자유게시판</p>
-            <p class="board-sub">포항고</p>
-          </div>
+      <button class="back-btn" aria-label="뒤로 가기" onclick="location.href='/pages/board/board.html#free'">
+        <img src="/assets/images/left.svg" alt="뒤로가기"/>
+      </button>
+
+      <div class="board-des">
+        <p class="board-title" id="boardTitle">자유게시판</p>
+        <p class="board-sub" id="boardSub">포항고</p>
+      </div>
 
       <a href="/pages/list.html" id="menuBtn" style="display:inline-block; cursor:pointer;">
         <img src="/assets/images/menu.svg" alt="햄버거바" />
       </a>
     </header>
-    
 
-    <!-- 본문 - 여기서 부터 작업 -->
-    <main class="container">
-      <p>board/board_detail 페이지 입니다. 이밑으로 작업 하면 됩니다.</p>
+    <!-- ===== 본문 ===== -->
+    <main class="container detail-container" id="detailApp" aria-live="polite">
+      <!-- 게시글 본문 -->
+      <article id="post" class="post">
+        <header class="post-head">
+          <div class="avatar"></div>
+          <div class="who">
+            <div class="name" id="postAuthor">익명</div>
+            <div class="time" id="postTime">10/06 14:20</div>
+          </div>
+        </header>
 
+        <h1 id="postTitle" class="post-title">이번주 금요일</h1>
+        <p id="postBody" class="post-body">학교 가야함?</p>
+
+        <div class="post-actions">
+          <button id="btnLikePost" class="act like" type="button" aria-pressed="false">
+            <img id="postHeartIcon" src="/assets/images/heart.svg" alt="좋아요">
+            <span>좋아요</span>
+            <strong id="postLikeCnt">5</strong>
+          </button>
+
+          <div class="act comment" role="button" tabindex="0">
+            <img src="/assets/images/chat.svg" alt="댓글">
+            <span>댓글</span>
+            <strong id="postCmtCnt">3</strong>
+          </div>
+
+          <!-- 작성자일 때만 보임 -->
+          <a id="btnEdit" class="btn-edit" href="/pages/board/update.html" hidden>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82Z" fill="currentColor"/>
+            </svg>
+            수정하기
+          </a>
+        </div>
+      </article>
+
+      <!-- 댓글 영역 -->
+      <section class="comments" id="commentsSec">
+        <div class="comment-card" id="commentList"><!-- JS 렌더링 --></div>
+      </section>
+
+      <!-- 입력창 -->
+      <form id="commentForm" class="comment-input" onsubmit="return false;">
+        <input id="commentField" type="text" placeholder="댓글을 입력하세요." autocomplete="off">
+        <button id="commentSend" type="submit" aria-label="댓글 전송">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z" fill="#1767FF"/>
+          </svg>
+        </button>
+      </form>
     </main>
   </div>
 
-  
-  <!-- === 여기서 부터 공통 === -->
-  <!-- === 메뉴 오버레이 === -->
+  <!-- ===== 공통 메뉴 오버레이 ===== -->
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="닫기">✕</button>
 
@@ -51,19 +95,15 @@
 
     <nav class="menu-nav">
       <a href="/pages/index.html" class="menu-item" data-menu="home">메인페이지</a>
-
-        <!-- 게시판 아코디언: 버튼 + 서브메뉴 -->
-        <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false">
-            게시판
-            <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
-        </button>
-        
-        <ul id="boardSub" class="submenu" hidden>
-            <li><a href="/pages/board/board.html"      class="submenu-item">자유게시판</a></li>
-            <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
-            <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
-        </ul>
-
+      <button id="boardToggle" class="menu-accordion-btn" type="button" aria-expanded="false" data-menu="boards">
+        게시판
+        <img src="/assets/images/down.svg" alt="" class="chev" aria-hidden="true">
+      </button>
+      <ul id="boardSub" class="submenu" hidden>
+        <li><a href="/pages/board/board.html#free" class="submenu-item">자유게시판</a></li>
+        <li><a href="/pages/board/board.html#anon" class="submenu-item">익명게시판</a></li>
+        <li><a href="/pages/board/board.html#qna"  class="submenu-item">질문게시판</a></li>
+      </ul>
       <a href="/pages/ranking/ranking.html" class="menu-item" data-menu="ranking">랭킹</a>
       <a href="/pages/class/class.html"     class="menu-item" data-menu="tasks">수행평가</a>
       <a href="/pages/mypage/mypage.html"   class="menu-item" data-menu="mypage">마이페이지</a>
@@ -76,5 +116,249 @@
 
   <!-- 공통 스크립트 -->
   <script defer src="/assets/js/main.js"></script>
+
+  <!-- ===== 페이지 전용 스크립트 ===== -->
+  <script>
+    // -------- 모의 데이터 (실서비스에선 API로 교체) --------
+    const CURRENT_USER_ID = 'me-001'; // 로그인 사용자
+
+    const MOCK_POST = {
+      id: 101,
+      category: 'free',
+      school: '포항고',
+      authorId: 'me-001', // 시연용: 본인 글
+      authorName: '익명',
+      time: '10/06 14:20',
+      title: '이번주 금요일',
+      body: '학교 가야함?',
+      likes: 5,
+      liked: false,
+      comments: [
+        {
+          id: 'c1',
+          author: '익명1',
+          time: '18:08',
+          text: '교장쌤한테 물어보면 된다. 나도 다녀옴',
+          likes: 1,
+          liked: false,
+          children: [
+            { id: 'r1', author: '익명2', time: '18:15', text: '이거 ㄹㅇ임 나도 다녀옴.', likes: 1, liked: false }
+          ]
+        },
+        { id: 'c2', author: '익명3', time: '18:34', text: '1학년임? 그것도 모름?', likes: 0, liked: false, children: [] }
+      ]
+    };
+
+    // -------- 유틸 --------
+    const $  = (s, p=document) => p.querySelector(s);
+    const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+    const qs = new URLSearchParams(location.search);
+    const postId = qs.get('id') || MOCK_POST.id;
+
+    // -------- 상태 --------
+    const state = JSON.parse(JSON.stringify(MOCK_POST)); // 데모용 복사
+    let replyTargetId = null; // 대댓글 타겟(comment id)
+
+    // -------- 초기 바인딩 --------
+    function initHeader() {
+      $('#boardTitle').textContent = state.category === 'free' ? '자유게시판'
+        : state.category === 'anon' ? '익명게시판' : '질문게시판';
+      $('#boardSub').textContent   = state.school;
+    }
+
+    function initPost() {
+      $('#postAuthor').textContent   = state.authorName;
+      $('#postTime').textContent     = state.time;
+      $('#postTitle').textContent    = state.title;
+      $('#postBody').textContent     = state.body;
+      $('#postLikeCnt').textContent  = state.likes;
+      $('#postCmtCnt').textContent   = countAllComments(state.comments);
+      updateHeartIcon($('#postHeartIcon'), state.liked);
+
+      if (state.authorId === CURRENT_USER_ID) {
+        const edit = $('#btnEdit');
+        edit.hidden = false;
+        const link = new URL(edit.getAttribute('href'), location.origin);
+        link.searchParams.set('id', postId);
+        edit.setAttribute('href', link.pathname + link.search);
+      }
+    }
+
+    function countAllComments(list) {
+      let n = 0;
+      for (const c of list) { n++; if (c.children) n += c.children.length; }
+      return n;
+    }
+
+    // -------- 렌더링 --------
+    const commentListEl = $('#commentList');
+
+    function renderComments() {
+      commentListEl.innerHTML = state.comments.map(c => renderComment(c)).join('');
+      bindCommentEvents();
+    }
+
+    function renderComment(c) {
+      const isReplying = c.id === replyTargetId;
+      const childHtml = (c.children || []).map(rc => `
+        <div class="reply" data-id="${rc.id}">
+          <div class="reply-body">
+            <div class="reply-head">
+              <div class="avatar sm"></div>
+              <strong class="name">${rc.author}</strong>
+            </div>
+            <div class="text">${escapeHTML(rc.text)}</div>
+            <div class="meta">
+              <span class="time">${rc.time}</span>
+              <span class="sep">|</span>
+              <button class="mini-like" data-type="reply">
+                <img src="/assets/images/${rc.liked ? 'heart_fill' : 'heart'}.svg" alt="좋아요">
+                <span>${rc.likes}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const replyCount = (c.children || []).length;
+
+      return `
+        <div class="comment ${isReplying ? 'replying' : ''}" data-id="${c.id}">
+          <div class="comment-head">
+            <div class="avatar"></div>
+            <strong class="name">${c.author}</strong>
+          </div>
+          <div class="text">${escapeHTML(c.text)}</div>
+
+          <div class="meta">
+            <span class="time">${c.time}</span>
+            <span class="sep">|</span>
+            <button class="mini-like" data-type="comment">
+              <img src="/assets/images/${c.liked ? 'heart_fill' : 'heart'}.svg" alt="좋아요">
+              <span>${c.likes}</span>
+            </button>
+
+            <!-- 답글 아이콘 + 카운트 -->
+            <button class="btn-reply-icon" type="button" aria-label="답글 달기">
+              <img src="/assets/images/chat.svg" alt="">
+              <span class="reply-count">${replyCount}</span>
+            </button>
+          </div>
+
+          ${childHtml ? `<div class="reply-wrap">${childHtml}</div>` : ''}
+        </div>
+      `;
+    }
+
+    function bindCommentEvents() {
+      // 답글 아이콘 클릭 -> 대댓글 모드 토글 + 하이라이트
+      $$('.btn-reply-icon', commentListEl).forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const wrap = e.currentTarget.closest('.comment');
+          const id = wrap.dataset.id;
+
+          if (replyTargetId === id) {
+            // 이미 선택된 댓글이면 해제
+            replyTargetId = null;
+            $('#commentField').placeholder = '댓글을 입력하세요.';
+          } else {
+            replyTargetId = id;
+            const targetName = $('.name', wrap).textContent;
+            $('#commentField').placeholder = `${targetName}에게 답글…`;
+          }
+          renderComments();
+          $('#commentField').focus();
+        });
+      });
+
+      // 댓글/대댓글 좋아요
+      $$('.mini-like', commentListEl).forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const type = e.currentTarget.dataset.type; // comment | reply
+          if (type === 'comment') {
+            const box = e.currentTarget.closest('.comment');
+            const id = box.dataset.id;
+            const cmt = state.comments.find(c => c.id === id);
+            cmt.liked = !cmt.liked;
+            cmt.likes += cmt.liked ? 1 : -1;
+          } else {
+            const rbox = e.currentTarget.closest('.reply');
+            const rid = rbox.dataset.id;
+            const pid = e.currentTarget.closest('.comment').dataset.id;
+            const cmt = state.comments.find(c => c.id === pid);
+            const rep = cmt.children.find(r => r.id === rid);
+            rep.liked = !rep.liked;
+            rep.likes += rep.liked ? 1 : -1;
+          }
+          renderComments();
+        });
+      });
+    }
+
+    // -------- 본문 좋아요 --------
+    $('#btnLikePost').addEventListener('click', () => {
+      state.liked = !state.liked;
+      state.likes += state.liked ? 1 : -1;
+      $('#postLikeCnt').textContent = state.likes;
+      updateHeartIcon($('#postHeartIcon'), state.liked);
+      $('#btnLikePost').setAttribute('aria-pressed', String(state.liked));
+    });
+
+    function updateHeartIcon(imgEl, liked) {
+      imgEl.src = liked ? '/assets/images/heart_fill.svg' : '/assets/images/heart.svg';
+    }
+
+    // -------- 댓글/대댓글 전송 --------
+    $('#commentForm').addEventListener('submit', () => {
+      const input = $('#commentField');
+      const text = input.value.trim();
+      if (!text) return;
+
+      if (replyTargetId) {
+        const target = state.comments.find(c => c.id === replyTargetId);
+        target.children.push({
+          id: 'r' + Date.now(),
+          author: '익명',
+          time: nowHHMM(),
+          text,
+          likes: 0,
+          liked: false
+        });
+      } else {
+        state.comments.push({
+          id: 'c' + Date.now(),
+          author: '익명',
+          time: nowHHMM(),
+          text,
+          likes: 0,
+          liked: false,
+          children: []
+        });
+      }
+
+      // 카운트/UI 리셋
+      $('#postCmtCnt').textContent = countAllComments(state.comments);
+      input.value = '';
+      input.placeholder = '댓글을 입력하세요.';
+      replyTargetId = null;
+      renderComments();
+    });
+
+    function nowHHMM() {
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2,'0');
+      const mm = String(d.getMinutes()).padStart(2,'0');
+      return `${hh}:${mm}`;
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    }
+
+    // -------- 초기화 --------
+    initHeader();
+    initPost();
+    renderComments();
+  </script>
 </body>
 </html>
